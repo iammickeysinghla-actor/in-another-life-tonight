@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>in another life, TONIGHT — a short film</title>
+  <meta name="description" content="some goodbyes don't exist. so you build them. A short film. 2026.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Jost:wght@100;200;300;400&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:       #08141A;
+      --rose:     #C4889A;
+      --rose-dim: rgba(196,136,154,0.18);
+      --rose-ln:  rgba(196,136,154,0.22);
+      --cream:    #F0EAE2;
+      --c70:      rgba(240,234,226,0.7);
+      --c40:      rgba(240,234,226,0.4);
+      --c18:      rgba(240,234,226,0.18);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      /* Vision board palette on body directly so sections never cover it.
+         Past Lives → deep steel-blue wall | Aftersun → olive lamp + cool city blue */
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(ellipse 110% 60% at -5%  10%,  rgba(14,95,108,0.82)  0%, transparent 58%),
+        radial-gradient(ellipse  70% 48% at 108%  5%,  rgba(8,88,100,0.74)   0%, transparent 55%),
+        radial-gradient(ellipse  80% 42% at   2% 58%,  rgba(6,70,84,0.70)    0%, transparent 58%),
+        radial-gradient(ellipse  26% 18% at  72% 36%,  rgba(120,95,25,0.50)  0%, transparent 46%),
+        radial-gradient(ellipse  65% 44% at 105% 90%,  rgba(8,78,92,0.68)    0%, transparent 55%),
+        radial-gradient(ellipse  58% 30% at  50% 100%, rgba(196,136,154,0.25) 0%, transparent 52%);
+      background-attachment: fixed;
+      color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* film grain — slightly punched up for analog feel */
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 9000; opacity: 0.055;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      mix-blend-mode: screen;
+    }
+
+    /* ══════════════════════════════
+       SECTION AMBIENT GLOWS
+    ══════════════════════════════ */
+
+    /* vision section — crimson ember, like the bar + red-doorway photos */
+    .vision-section {
+      position: relative;
+    }
+    .vision-section::before {
+      content: '';
+      position: absolute; inset: -60px -80px;
+      background:
+        /* Past Lives steel-blue — left edge, like the wall behind them */
+        radial-gradient(ellipse 55% 65% at 0%   45%, rgba(10,78,90,0.28) 0%, transparent 60%),
+        /* Aftersun olive-lamp — small warm point, upper right */
+        radial-gradient(ellipse 35% 30% at 85% 25%, rgba(95,78,18,0.18)  0%, transparent 50%);
+      pointer-events: none; z-index: 0;
+    }
+    .vision-section > * { position: relative; z-index: 1; }
+
+    /* contact section — soft rose bloom via ::after, warmth of the lamp photo */
+    .contact-section {
+      position: relative;
+    }
+    .contact-section::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 65% 70% at 50% 25%, rgba(196,136,154,0.07) 0%, transparent 65%);
+      pointer-events: none; z-index: 0;
+    }
+    .contact-section > * { position: relative; z-index: 1; }
+
+    /* ══════════════════════════════
+       HERO — full-bleed portrait bg
+    ══════════════════════════════ */
+    .hero {
+      min-height: 100svh;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 24px 96px;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute; inset: 0;
+      background-image: url('film-5.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      transform: scale(1.04);
+      animation: slowZoom 20s ease-in-out infinite alternate;
+      filter: brightness(0.4) saturate(0.75);
+    }
+
+    @keyframes slowZoom {
+      from { transform: scale(1.04); }
+      to   { transform: scale(1.12); }
+    }
+
+    /* overlay — preserves just the warm amber glow bleeding from bottom */
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom,
+          rgba(9,8,6,0.5) 0%,
+          rgba(9,8,6,0.1) 40%,
+          rgba(9,8,6,0.2) 65%,
+          rgba(9,8,6,0.88) 100%),
+        linear-gradient(to right, rgba(9,8,6,0.4) 0%, transparent 20%, transparent 80%, rgba(9,8,6,0.4) 100%);
+    }
+
+    .hero-inner {
+      position: relative; z-index: 1;
+      text-align: center;
+      opacity: 0;
+      animation: riseIn 2s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
+    }
+
+    @keyframes riseIn {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .prod-label {
+      font-family: 'Jost', sans-serif;
+      font-weight: 200; font-size: 0.6rem;
+      letter-spacing: 0.32em; text-transform: lowercase;
+      color: var(--c40); margin-bottom: 36px;
+    }
+
+    .title-line1 {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.6rem, 7vw, 7rem);
+      line-height: 1; letter-spacing: -0.01em;
+      color: var(--cream);
+    }
+
+    .title-line2 {
+      display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: normal; font-weight: 500;
+      font-size: clamp(2.6rem, 7vw, 7rem);
+      line-height: 1; letter-spacing: 0.05em;
+      color: var(--rose);
+      margin-bottom: 44px;
+    }
+
+    .hero-rule {
+      width: 1px; height: 52px;
+      background: linear-gradient(to bottom, var(--rose-ln), transparent);
+      margin: 0 auto 44px;
+    }
+
+    .hero-tagline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.95rem, 2vw, 1.2rem);
+      color: var(--c70); letter-spacing: 0.02em;
+      line-height: 1.75; max-width: 400px; margin: 0 auto 52px;
+    }
+
+    .hero-meta {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.6rem; letter-spacing: 0.42em;
+      text-transform: uppercase; color: var(--c40);
+    }
+
+    .hero-meta span { color: var(--rose); opacity: 0.7; }
+
+    .scroll-hint {
+      position: absolute; bottom: 40px; left: 50%;
+      transform: translateX(-50%); z-index: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 9px;
+      opacity: 0; animation: fadeHint 1s ease 3s forwards;
+    }
+
+    @keyframes fadeHint { to { opacity: 0.35; } }
+
+    .scroll-hint-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, var(--rose), transparent);
+      animation: pulseLine 2.4s ease-in-out infinite 3s;
+    }
+
+    @keyframes pulseLine {
+      0%,100% { opacity: 0.35; transform: scaleY(1); transform-origin: top; }
+      50%      { opacity: 0.7;  transform: scaleY(0.6); transform-origin: top; }
+    }
+
+    /* ══════════════════════════════
+       QUOTE
+    ══════════════════════════════ */
+    .quote-section {
+      padding: 100px 24px;
+      text-align: center; position: relative;
+    }
+
+    .quote-section::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--rose-ln));
+    }
+
+    blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.5rem, 4vw, 2.8rem);
+      line-height: 1.45; color: var(--cream);
+      max-width: 720px; margin: 0 auto 24px;
+    }
+
+    .q-attr {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.62rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--rose); opacity: 0.65;
+    }
+
+    /* ══════════════════════════════
+       ABOUT
+    ══════════════════════════════ */
+    .about-section {
+      padding: 60px 24px 80px;
+      max-width: 620px; margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.58rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--rose);
+      margin-bottom: 40px;
+      display: flex; align-items: center; gap: 18px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 0 0 64px; height: 1px;
+      background: linear-gradient(to right, var(--rose-ln), transparent);
+    }
+
+    .about-body {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      line-height: 1.85; color: var(--c70);
+    }
+
+    .about-body p + p { margin-top: 1.4em; }
+
+    /* ══════════════════════════════
+       IMAGE STRIP — 3 cinematic stills
+    ══════════════════════════════ */
+    .image-strip {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 1fr;
+      gap: 3px;
+      height: clamp(220px, 32vw, 420px);
+      margin: 0 0 3px;
+      position: relative;
+    }
+
+    .strip-img {
+      position: relative;
+      overflow: hidden;
+      cursor: default;
+    }
+
+    .strip-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(0.72) saturate(0.85);
+      transition: filter 0.6s ease, transform 0.6s ease;
+    }
+
+    .strip-img:hover img {
+      filter: brightness(0.85) saturate(1);
+      transform: scale(1.04);
+    }
+
+    /* dark bottom fade on each still */
+    .strip-img::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(9,8,6,0.55) 100%);
+      pointer-events: none;
+    }
+
+    /* full-width bottom strip image */
+    .image-strip-bottom {
+      height: clamp(160px, 22vw, 300px);
+      position: relative; overflow: hidden;
+    }
+
+    .image-strip-bottom img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center 40%;
+      display: block;
+      filter: brightness(0.65) saturate(0.8);
+      transition: filter 0.6s ease;
+    }
+
+    .image-strip-bottom:hover img {
+      filter: brightness(0.8) saturate(1);
+    }
+
+    .image-strip-bottom::after {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(9,8,6,0.45) 0%, transparent 30%, transparent 70%, rgba(9,8,6,0.6) 100%);
+      pointer-events: none;
+    }
+
+    /* ══════════════════════════════
+       DIRECTOR'S VISION
+    ══════════════════════════════ */
+    .vision-section {
+      padding: 80px 24px 80px;
+      max-width: 760px; margin: 0 auto;
+    }
+
+    .vision-body {
+      margin-top: 40px;
+    }
+
+    .vision-quote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.05rem, 2vw, 1.3rem);
+      line-height: 1.9; color: var(--c70);
+      margin-bottom: 32px;
+    }
+
+    .vision-attr {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.58rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--rose);
+      opacity: 0.65; margin-bottom: 56px;
+    }
+
+    .vision-stills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      height: clamp(180px, 28vw, 340px);
+    }
+
+    .vision-still {
+      overflow: hidden; position: relative;
+    }
+
+    .vision-still img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: center top;
+      display: block;
+      filter: brightness(0.75) saturate(0.7);
+      transition: filter 0.5s ease;
+    }
+
+    .vision-still:hover img {
+      filter: brightness(0.9) saturate(0.9);
+    }
+
+    .vision-still::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 40%, rgba(9,8,6,0.5) 100%);
+      pointer-events: none;
+    }
+
+    .vision-tone {
+      margin-top: 40px;
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.68rem; letter-spacing: 0.12em;
+      line-height: 1.85; color: var(--c40);
+    }
+
+    .vision-tone em {
+    }
+
+    @media (max-width: 640px) {
+      .vision-stills { height: clamp(160px, 50vw, 240px); }
+    }
+
+    /* ══════════════════════════════
+       CREDITS
+    ══════════════════════════════ */
+    .credits-section {
+      padding: 80px 24px 90px;
+      max-width: 620px; margin: 0 auto;
+    }
+
+    .credits-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 44px 52px; margin-top: 40px;
+    }
+
+    .credit-label {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.56rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--rose);
+      opacity: 0.65; margin-bottom: 9px;
+    }
+
+    .credit-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; font-size: 1.05rem;
+      color: var(--cream); line-height: 1.4;
+    }
+
+    /* ══════════════════════════════
+       CHARACTERS
+    ══════════════════════════════ */
+    .characters-section {
+      padding: 80px 24px 60px;
+      max-width: 900px; margin: 0 auto;
+    }
+
+    .characters-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-top: 48px;
+      border: 1px solid var(--c18);
+    }
+
+    .character-card {
+      position: relative;
+      cursor: pointer;
+      background: var(--bg);
+      padding: 44px 36px 40px;
+      border-right: 1px solid var(--c18);
+      transition: background 0.4s;
+    }
+
+    .character-card:last-child { border-right: none; }
+    .character-card:hover { background: rgba(196,136,154,0.04); }
+    .character-card.open { background: rgba(196,136,154,0.06); }
+
+    .character-role {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.54rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--rose);
+      opacity: 0.65; margin-bottom: 14px;
+    }
+
+    .character-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      color: var(--cream); line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .character-tagline {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: var(--c40); text-transform: uppercase;
+      margin-bottom: 0;
+    }
+
+    .character-tap-hint {
+      position: absolute; top: 24px; right: 24px;
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.5rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--c18);
+      transition: opacity 0.4s;
+    }
+
+    .character-card.open .character-tap-hint { opacity: 0; }
+
+    /* revealed detail panel */
+    .character-detail {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.6s ease, opacity 0.4s ease;
+      opacity: 0; pointer-events: none;
+    }
+
+    .character-card.open .character-detail {
+      max-height: 600px; opacity: 1; pointer-events: auto;
+    }
+
+    .char-divider {
+      width: 32px; height: 1px;
+      background: var(--rose-ln);
+      margin: 28px 0;
+    }
+
+    .char-row { margin-bottom: 20px; }
+
+    .char-row-label {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.5rem; letter-spacing: 0.4em;
+      text-transform: uppercase; color: var(--rose);
+      opacity: 0.6; margin-bottom: 7px;
+    }
+
+    .char-row-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.88rem, 1.4vw, 1rem);
+      color: var(--c70); line-height: 1.65;
+    }
+
+    .char-close {
+      margin-top: 24px; display: inline-block;
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.5rem; letter-spacing: 0.38em;
+      text-transform: uppercase; color: var(--c40);
+      cursor: pointer;
+      border-bottom: 1px solid var(--c18); padding-bottom: 2px;
+      transition: color 0.3s;
+    }
+
+    .char-close:hover { color: var(--rose); }
+
+    @media (max-width: 640px) {
+      .characters-grid { grid-template-columns: 1fr; }
+      .character-card { border-right: none; border-bottom: 1px solid var(--c18); }
+      .character-card:last-child { border-bottom: none; }
+    }
+
+    /* ══════════════════════════════
+       FESTIVALS
+    ══════════════════════════════ */
+    .festivals-section {
+      border-top: 1px solid var(--c18);
+      padding: 64px 24px; text-align: center;
+    }
+
+    .festival-label {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.58rem; letter-spacing: 0.45em;
+      text-transform: uppercase; color: var(--rose);
+      opacity: 0.65; margin-bottom: 28px;
+    }
+
+    .festival-targeting {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.54rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--c18);
+      margin-bottom: 20px;
+    }
+
+    .festival-list {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1rem, 2.2vw, 1.3rem);
+      color: var(--c40); letter-spacing: 0.04em;
+    }
+
+    .festival-list span { color: var(--c18); margin: 0 12px; font-style: normal; }
+
+    /* ══════════════════════════════
+       CONTACT
+    ══════════════════════════════ */
+    .contact-section {
+      padding: 96px 24px 88px;
+      text-align: center; position: relative;
+    }
+
+    .contact-section::before {
+      content: '';
+      position: absolute; top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 1px; height: 60px;
+      background: linear-gradient(to bottom, transparent, var(--rose-ln));
+    }
+
+    .contact-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 4.5vw, 2.8rem);
+      color: var(--cream); margin-bottom: 12px;
+    }
+
+    .contact-sub {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.7rem; letter-spacing: 0.18em;
+      color: var(--c40); margin-bottom: 48px;
+    }
+
+    .email-form {
+      display: flex; max-width: 380px; margin: 0 auto 36px;
+      border: 1px solid var(--rose-ln); transition: border-color 0.3s;
+    }
+
+    .email-form:focus-within { border-color: rgba(196,136,154,0.45); }
+
+    .email-form input {
+      flex: 1; background: transparent;
+      border: none; outline: none;
+      padding: 13px 18px;
+      font-family: 'Jost', sans-serif; font-weight: 300;
+      font-size: 0.8rem; letter-spacing: 0.04em; color: var(--cream);
+    }
+
+    .email-form input::placeholder { color: var(--c40); }
+
+    .email-form button {
+      background: transparent; border: none;
+      border-left: 1px solid var(--rose-ln);
+      padding: 13px 18px;
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.6rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: var(--rose);
+      cursor: pointer; transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .email-form button:hover { background: var(--rose-dim); }
+
+    .form-done {
+      display: none;
+      font-family: 'Cormorant Garamond', serif;
+      color: var(--rose); margin-bottom: 36px;
+    }
+
+    .or-row {
+      display: flex; align-items: center; gap: 14px;
+      max-width: 260px; margin: 0 auto 32px;
+    }
+
+    .or-row::before, .or-row::after {
+      content: ''; flex: 1; height: 1px; background: var(--c18);
+    }
+
+    .or-row span {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.58rem; letter-spacing: 0.28em;
+      text-transform: uppercase; color: var(--c40);
+    }
+
+    .email-link {
+      display: inline-block;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400; font-size: 0.95rem;
+      color: var(--c40); text-decoration: none;
+      border-bottom: 1px solid var(--c18); padding-bottom: 2px;
+      transition: color 0.3s, border-color 0.3s;
+    }
+
+    .email-link:hover { color: var(--rose); border-color: var(--rose-ln); }
+
+    /* ══════════════════════════════
+       FOOTER
+    ══════════════════════════════ */
+    footer {
+      border-top: 1px solid var(--c18);
+      padding: 32px 24px;
+      display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+
+    footer p {
+      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-size: 0.58rem; letter-spacing: 0.25em;
+      text-transform: uppercase; color: var(--c18);
+    }
+
+    /* ══════════════════════════════
+       REVEAL
+    ══════════════════════════════ */
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════ */
+    @media (max-width: 640px) {
+      .image-strip { grid-template-columns: 1fr 1fr; height: clamp(180px, 55vw, 260px); }
+      .strip-img:last-child { display: none; }
+      .credits-grid { grid-template-columns: 1fr; gap: 36px; }
+      .festival-list span { display: block; opacity: 0; height: 6px; margin: 0; }
+      .email-form { flex-direction: column; }
+      .email-form button { border-left: none; border-top: 1px solid var(--rose-ln); }
+      footer { justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+
+    <div class="hero-inner">
+      <p class="prod-label">a sunset III film</p>
+      <h1>
+        <span class="title-line1">in another life,</span>
+        <span class="title-line2">TONIGHT</span>
+      </h1>
+      <div class="hero-rule"></div>
+      <p class="hero-tagline">
+        "some goodbyes don't exist.<br>so you build them."
+      </p>
+      <p class="hero-meta">Short Film &nbsp;<span>·</span>&nbsp; 2026</p>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-hint-line"></div>
+    </div>
+  </section>
+
+
+  <!-- ══ QUOTE ══ -->
+  <section class="quote-section reveal">
+    <blockquote>
+      "I just wish you'd let me say goodbye."
+    </blockquote>
+    <p class="q-attr">— Milo</p>
+  </section>
+
+
+  <!-- ══ ABOUT ══ -->
+  <section class="about-section reveal">
+    <p class="section-label">The Film</p>
+    <div class="about-body">
+      <p>A man. A restaurant. A night that was supposed to be a fresh start.</p>
+      <p><em>in another life, TONIGHT</em> is a psychological drama about the quiet, costly work of survival — and what it takes to close a door that was never properly opened.</p>
+      <p>15 minutes. One night. Two timelines.</p>
+    </div>
+  </section>
+
+
+  <!-- ══ IMAGE STRIP ══ -->
+  <div class="image-strip reveal">
+    <!-- man through glass bar window — red glow -->
+    <div class="strip-img">
+      <img src="film-2.jpg" alt="" loading="lazy">
+    </div>
+    <!-- restaurant interior — lamp, marble table, night window -->
+    <div class="strip-img">
+      <img src="film-4.jpg" alt="" loading="lazy">
+    </div>
+    <!-- man in red light through doorway -->
+    <div class="strip-img">
+      <img src="film-3.jpg" alt="" loading="lazy">
+    </div>
+  </div>
+
+  <!-- full-width: two people walking city at night -->
+  <div class="image-strip-bottom reveal">
+    <img src="film-1.jpg" alt="" loading="lazy">
+  </div>
+
+
+  <!-- ══ CHARACTERS ══ -->
+  <section class="characters-section reveal">
+    <p class="section-label">The Characters</p>
+
+    <div class="characters-grid">
+
+      <!-- MILO -->
+      <div class="character-card" id="card-milo">
+        <span class="character-tap-hint">learn more</span>
+        <p class="character-role">Late 20s · Our entire lens</p>
+        <p class="character-name">Milo</p>
+        <p class="character-tagline">the one who waited</p>
+        <div class="character-detail">
+          <div class="char-divider"></div>
+          <div class="char-row">
+            <p class="char-row-label">Who he is</p>
+            <p class="char-row-text">Thorough and intentional. Plans the perfect evening and quietly watches to see if it lands. Checked Lex's Instagram before bringing him here.</p>
+          </div>
+          <div class="char-row">
+            <p class="char-row-label">His wound</p>
+            <p class="char-row-text">He let himself be fully seen and got silence back. He waited for Lex to validate what happened. Lex never did.</p>
+          </div>
+          <div class="char-row">
+            <p class="char-row-label">His arc</p>
+            <p class="char-row-text">Stops waiting for something that was never coming. Builds it himself. Discovers that building it and receiving it are not the same thing.</p>
+          </div>
+          <span class="char-close" onclick="closeCard('card-milo')">close</span>
+        </div>
+      </div>
+
+      <!-- LEX -->
+      <div class="character-card" id="card-lex">
+        <span class="character-tap-hint">learn more</span>
+        <p class="character-role">Late 30s · Presence and absence</p>
+        <p class="character-name">Lex</p>
+        <p class="character-tagline">the one who stayed quiet</p>
+        <div class="character-detail">
+          <div class="char-divider"></div>
+          <div class="char-row">
+            <p class="char-row-label">Who he is</p>
+            <p class="char-row-text">Guarded in a way that looks like charm. Capable of openness in small doses — a joke, a moment, a quiet admission. But always with the door slightly ajar behind him.</p>
+          </div>
+          <div class="char-row">
+            <p class="char-row-label">His wound</p>
+            <p class="char-row-text">Being truly seen felt like a threat, not a gift. He chose silence over the risk of being known. He went quiet when Milo needed him to speak.</p>
+          </div>
+          <div class="char-row">
+            <p class="char-row-label">His arc</p>
+            <p class="char-row-text">None. The tragedy isn't that Lex changed. It's that he didn't.</p>
+          </div>
+          <span class="char-close" onclick="closeCard('card-lex')">close</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ══ DIRECTOR'S VISION ══ -->
+  <section class="vision-section reveal">
+    <p class="section-label">Director's Vision</p>
+    <div class="vision-body">
+      <p class="vision-quote">
+        "I was drawn to this script for how quietly it handles an ending that never fully arrives. There's no confrontation or clear resolution — just the weight of something unfinished. That emotional ambiguity feels very real to me, and the many experiences I had dating men that were not healed yet. This purgatory of sorts is the space I want to build the film from rather than trying to define it.
+        <br><br>
+        In directing, I plan to let memory, imagination, and the present bleed together, the way they do when something unresolved lingers. Milo doesn't get the goodbye he needed, so he creates one. And while that may offer a kind of release, I'm interested in the quiet loss within that — something real that can never be recreated or truly forgotten.
+        <br><br>
+        My approach will be restrained, letting the story live in small looks and unspoken moments. In the end, it's not about resolution, but a resurrection of self — to decide to love again despite the fear that will linger."
+      </p>
+      <p class="vision-attr">— Tony Tacheny, Director</p>
+
+      <div class="vision-stills">
+        <div class="vision-still">
+          <img src="vision-1.png" alt="" loading="lazy">
+        </div>
+        <div class="vision-still">
+          <img src="vision-2.png" alt="" loading="lazy">
+        </div>
+      </div>
+
+      <p class="vision-tone">
+        The film is grounded and intimate — feeling like we're watching two real people navigate something undefined. Moody but not dark. Soft, natural light with a sense of quiet atmosphere. The camera stays close and patient, capturing small, unspoken moments. Memory, imagination, and the present aren't visually separated, but gently blur together, creating the feeling of a memory that may not be entirely true. <em>This film will blend the realness of Past Lives and the uncertainty of Aftersun.</em>
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ══ CREDITS ══ -->
+  <section class="credits-section reveal">
+    <p class="section-label">Key Creatives</p>
+    <div class="credits-grid">
+      <div>
+        <p class="credit-label">Director</p>
+        <p class="credit-name">Tony Tacheny</p>
+      </div>
+      <div>
+        <p class="credit-label">Writer / Exec. Producer / Actor</p>
+        <p class="credit-name">Mickey Singh</p>
+      </div>
+      <div>
+        <p class="credit-label">Producer</p>
+        <p class="credit-name">Nidhin Patel</p>
+      </div>
+      <div>
+        <p class="credit-label">Production</p>
+        <p class="credit-name">a sunset III film</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══ FESTIVALS ══ -->
+  <section class="festivals-section reveal">
+    <p class="festival-label">Festival Targets</p>
+    <p class="festival-targeting">Targeting the 2026 circuit</p>
+    <p class="festival-list">
+      Sundance<span>·</span>Tribeca<span>·</span>SXSW<span>·</span>Outfest
+    </p>
+  </section>
+
+
+  <!-- ══ CONTACT ══ -->
+  <section class="contact-section reveal">
+    <h2 class="contact-heading">Stay close.</h2>
+    <p class="contact-sub">Screenings, festival dates &amp; updates.</p>
+
+    <form class="email-form" id="signupForm">
+      <input type="email" placeholder="your@email.com" required>
+      <button type="submit">Notify me</button>
+    </form>
+
+    <p class="form-done" id="formDone">You'll hear from us. &nbsp;✦</p>
+
+    <div class="or-row"><span>or</span></div>
+    <a href="mailto:iammickeysingh.la@gmail.com" class="email-link">iammickeysingh.la@gmail.com</a>
+  </section>
+
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <p>in another life, TONIGHT &nbsp;·&nbsp; 2026</p>
+    <p>a sunset III film &nbsp;·&nbsp; all rights reserved</p>
+  </footer>
+
+
+  <script>
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      this.style.display = 'none';
+      document.getElementById('formDone').style.display = 'block';
+    });
+
+    // Character cards
+    document.querySelectorAll('.character-card').forEach(card => {
+      card.addEventListener('click', function(e) {
+        if (e.target.classList.contains('char-close')) return;
+        // close others
+        document.querySelectorAll('.character-card').forEach(c => {
+          if (c !== this) c.classList.remove('open');
+        });
+        this.classList.toggle('open');
+      });
+    });
+
+    function closeCard(id) {
+      document.getElementById(id).classList.remove('open');
+    }
+  </script>
+</body>
+</html>
