@@ -918,6 +918,10 @@
 
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      const email = this.querySelector('input[type="email"]').value;
+      window.location.href = 'mailto:iammickeysingh.la@gmail.com'
+        + '?subject=Notify%20me%20%E2%80%94%20In%20Another%20Life%2C%20Tonight'
+        + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
       this.style.display = 'none';
       document.getElementById('formDone').style.display = 'block';
     });
