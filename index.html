@@ -150,18 +150,18 @@
       -webkit-mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
               mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
     }
-    /* poster treatment: soft, lifted, dreamy */
+    /* sharp frame, feathered into the dark */
     .hero-bg {
-      filter: blur(1.2px) brightness(0.95) contrast(0.86) saturate(0.88) sepia(0.08);
+      filter: brightness(0.86) saturate(0.95);
       animation: slowZoom 28s ease-in-out infinite alternate;
     }
-    /* the echo: a blurred second take of the same frame, drifting slightly off register */
+    /* the echo: a ghosted second take of the same frame, drifting slightly off register */
     .hero-ghost {
-      filter: blur(26px) brightness(1.05) saturate(1.15);
-      opacity: 0.55; mix-blend-mode: screen;
+      filter: blur(7px) brightness(1.1) saturate(1.2);
+      opacity: 0.4; mix-blend-mode: screen;
       animation: ghostDrift 22s ease-in-out infinite alternate;
     }
-    @keyframes ghostDrift { from { transform: translateX(-2.2%) scale(1.04); } to { transform: translateX(2.2%) scale(1.09); } }
+    @keyframes ghostDrift { from { transform: translateX(-3.2%) scale(1.03); } to { transform: translateX(3.2%) scale(1.06); } }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.05); } }
 
     .hero-overlay {
@@ -545,8 +545,8 @@
       <p class="logline">Over one dinner, a man's carefree night out with a friend collides with the ex he never got to say goodbye to, pulling him back into the night that started it all.</p>
       <div class="prose">
         <p>Milo is out to dinner with his friend Ray, sharing plates and toasting to a weekend with no filters. Then Lex walks in, hand in hand with someone new.</p>
-        <p>Lex is the man Milo was only beginning to fall for, until a fear, a possible move, and a goodbye that never came ended it. Milo retreats, but the restaurant where they had their first date won't let him go. The light, the music, and the memory of that night begin to blur into the present.</p>
-        <p>A man who has been running from what he feels comes face to face with everything they never said.</p>
+        <p>Lex is the guy Milo was just starting to fall for, until things ended without a goodbye. Milo steps away, but the restaurant won't let him go. It's where the night that mattered most to them began, and the light, the music, and the memory of that night start to blur into the present.</p>
+        <p>One dinner, and everything they never said.</p>
       </div>
     </div>
   </section>
