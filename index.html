@@ -339,20 +339,19 @@
     ══════════════════════════════ */
     .stills-section { padding: 90px 0 0; }
     .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 28px; }
-    .memory { position: relative; height: calc(16 * 52vh + 100vh); }
+    .memory { position: relative; height: calc(16 * 60vh + 100vh); }
     .memory-stage {
       position: sticky; top: 0; height: 100svh; overflow: hidden; cursor: zoom-in;
       --mx: 50%; --my: 50%; --r: 270px; touch-action: pan-y;
     }
     .m-frame { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
     .m-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); }
-    .m-blur { filter: blur(16px) brightness(0.5) saturate(0.8); transform: scale(1.1); }
-    .m-sharp {
-      filter: brightness(0.88) saturate(0.95);
-      -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.9) 38%, transparent 100%);
-              mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.9) 38%, transparent 100%);
+    .m-sharp { filter: brightness(0.9) saturate(0.95); }
+    .m-dim {
+      position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(circle calc(var(--r) * 1.5) at var(--mx) var(--my), rgba(13,9,12,0) 0%, rgba(13,9,12,0) 30%, rgba(13,9,12,0.5) 100%);
     }
-    @media (hover: none) { .m-blur { display: none; } .m-sharp { -webkit-mask-image: none; mask-image: none; filter: brightness(0.7) saturate(0.9); } .lens { display: none; } }
+    @media (hover: none) { .m-dim, .lens { display: none; } }
     .memory-stage::after {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 40%, rgba(13,9,12,0.7) 100%),
@@ -563,7 +562,7 @@
       </div>
 
       <div class="character-card" id="card-lex">
-        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 53% center">
+        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 61% center">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Presence and absence</p>
         <p class="character-name">Lex</p>
@@ -614,7 +613,7 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 18% center">
+        <div class="plate" style="--pos: 27% center">
           <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
@@ -640,22 +639,23 @@
     <p class="section-label">stills</p>
     <div class="memory" id="memory">
       <div class="memory-stage" id="memStage">
-        <div class="m-frame" style="--pos:62% 25%"><img class="m-blur" src="stills/03-table-head-back.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/03-table-head-back.jpg" alt="milo at the table, head tipped back" loading="lazy"></div>
-        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/07-lex-menu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/07-lex-menu.jpg" alt="lex over the menu" loading="lazy"></div>
-        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/06-milo-menu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/06-milo-menu.jpg" alt="milo over the menu" loading="lazy"></div>
-        <div class="m-frame" style="--pos:60% center"><img class="m-blur" src="stills/09-lex-tiramisu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/09-lex-tiramisu.jpg" alt="lex and the tiramisu" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/11-lex-arms.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/11-lex-arms.jpg" alt="lex, arms folded" loading="lazy"></div>
-        <div class="m-frame" style="--pos:55% 30%"><img class="m-blur" src="stills/10-milo-chin.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/10-milo-chin.jpg" alt="milo, chin in hand" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/12-milo-fork.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/12-milo-fork.jpg" alt="milo with a fork" loading="lazy"></div>
-        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/04-milo-laugh.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/04-milo-laugh.jpg" alt="milo laughing" loading="lazy"></div>
-        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/08-lex-listening.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/08-lex-listening.jpg" alt="lex listening" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/05-walk.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/05-walk.jpg" alt="walking home" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/14-glass.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/14-glass.jpg" alt="through the glass" loading="lazy"></div>
-        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/15-lex-smile.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/15-lex-smile.jpg" alt="lex smiling" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center 35%"><img class="m-blur" src="stills/16-face-to-face.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center 35%"><img class="m-blur" src="stills/17-close.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/17-close.jpg" alt="close" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center 40%"><img class="m-blur" src="stills/13-embrace-silhouette.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/13-embrace-silhouette.jpg" alt="embrace in silhouette" loading="lazy"></div>
-        <div class="m-frame" style="--pos:center 40%"><img class="m-blur" src="stills/18-hug.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/18-hug.jpg" alt="an embrace" loading="lazy"></div>
+        <div class="m-frame" style="--pos:62% 25%"><img class="m-sharp" src="stills/03-table-head-back.jpg" alt="milo at the table, head tipped back" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-sharp" src="stills/07-lex-menu.jpg" alt="lex over the menu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-sharp" src="stills/06-milo-menu.jpg" alt="milo over the menu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:60% center"><img class="m-sharp" src="stills/09-lex-tiramisu.jpg" alt="lex and the tiramisu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-sharp" src="stills/11-lex-arms.jpg" alt="lex, arms folded" loading="lazy"></div>
+        <div class="m-frame" style="--pos:55% 30%"><img class="m-sharp" src="stills/10-milo-chin.jpg" alt="milo, chin in hand" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-sharp" src="stills/12-milo-fork.jpg" alt="milo with a fork" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-sharp" src="stills/04-milo-laugh.jpg" alt="milo laughing" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-sharp" src="stills/08-lex-listening.jpg" alt="lex listening" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-sharp" src="stills/05-walk.jpg" alt="walking home" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-sharp" src="stills/14-glass.jpg" alt="through the glass" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-sharp" src="stills/15-lex-smile.jpg" alt="lex smiling" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 35%"><img class="m-sharp" src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 35%"><img class="m-sharp" src="stills/17-close.jpg" alt="close" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 40%"><img class="m-sharp" src="stills/13-embrace-silhouette.jpg" alt="embrace in silhouette" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 40%"><img class="m-sharp" src="stills/18-hug.jpg" alt="an embrace" loading="lazy"></div>
+        <div class="m-dim"></div>
         <div class="lens" id="lens"></div>
         <div class="m-ui">
           <p class="m-count"><b id="mNow" style="font-weight:300">01</b><span>/ 16</span></p>
@@ -773,26 +773,19 @@
       parallax();
     }
 
-    // stills — memory dissolve + focus-pull lens
+    // stills — smooth scroll-driven dissolve + a light that follows the cursor
     const mem = document.getElementById('memory'), stage = document.getElementById('memStage');
     const mFrames = [...stage.querySelectorAll('.m-frame')], N = mFrames.length;
     const canHover = matchMedia('(hover: hover)').matches;
-    const hint = document.getElementById('mHint');
-    hint.textContent = canHover ? 'move to bring it into focus' : 'keep scrolling';
-    let curFrame = 0;
-    function memScroll() {
+    const hint = document.getElementById('mHint'), lensEl = document.getElementById('lens');
+    hint.textContent = canHover ? 'move your cursor to light the frame' : 'keep scrolling';
+    let curFrame = 0, target = 0, sp = 0, shown = -1;
+    function memTarget() {
       const r = mem.getBoundingClientRect();
       const total = mem.offsetHeight - innerHeight;
-      const p = Math.min(1, Math.max(0, -r.top / total)) * (N - 1);
-      mFrames.forEach((f, i) => {
-        const o = Math.min(1, Math.max(0, (1 - Math.abs(p - i)) * 1.8));
-        f.style.opacity = o;
-        f.style.transform = 'scale(' + (1 + (1 - o) * 0.05 + (p - i) * 0.008).toFixed(4) + ')';
-      });
-      curFrame = Math.round(p);
-      document.getElementById('mNow').textContent = String(curFrame + 1).padStart(2, '0');
+      target = Math.min(1, Math.max(0, -r.top / total)) * (N - 1);
     }
-    addEventListener('scroll', memScroll, { passive: true }); addEventListener('resize', memScroll); memScroll();
+    addEventListener('scroll', memTarget, { passive: true }); addEventListener('resize', memTarget); memTarget(); sp = target;
 
     let tx = 0.5, ty = 0.5, cx = 0.5, cy = 0.5, touched = false, t0 = performance.now();
     stage.addEventListener('pointermove', e => {
@@ -801,18 +794,32 @@
       tx = (e.clientX - b.left) / b.width; ty = (e.clientY - b.top) / b.height;
       if (!touched) { touched = true; hint.classList.add('gone'); }
     });
-    function lens(now) {
-      if (canHover && stage.getBoundingClientRect().bottom > 0 && stage.getBoundingClientRect().top < innerHeight) {
-        if (!touched) { const s = (now - t0) / 1000; tx = 0.5 + 0.22 * Math.sin(s * 0.5); ty = 0.5 + 0.18 * Math.sin(s * 0.8); }
-        cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
-        stage.style.setProperty('--mx', (cx * 100).toFixed(2) + '%');
-        stage.style.setProperty('--my', (cy * 100).toFixed(2) + '%');
-        const b = stage.getBoundingClientRect();
-        document.getElementById('lens').style.transform = 'translate(' + (cx * b.width - 270).toFixed(1) + 'px,' + (cy * b.height - 270).toFixed(1) + 'px)';
+    function tick(now) {
+      const b = stage.getBoundingClientRect();
+      if (b.bottom > 0 && b.top < innerHeight) {
+        sp += (target - sp) * 0.1;
+        if (Math.abs(target - sp) < 0.0005) sp = target;
+        if (sp !== shown) {
+          shown = sp;
+          mFrames.forEach((f, i) => {
+            const o = Math.min(1, Math.max(0, (1 - Math.abs(sp - i)) * 2.2));
+            f.style.opacity = o;
+            f.style.transform = 'scale(' + (1.02 + (sp - i) * 0.012).toFixed(4) + ')';
+          });
+          const c = Math.round(sp);
+          if (c !== curFrame || !curFrame) { curFrame = c; document.getElementById('mNow').textContent = String(c + 1).padStart(2, '0'); }
+        }
+        if (canHover) {
+          if (!touched) { const s = (now - t0) / 1000; tx = 0.5 + 0.22 * Math.sin(s * 0.5); ty = 0.5 + 0.18 * Math.sin(s * 0.8); }
+          cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+          stage.style.setProperty('--mx', (cx * 100).toFixed(2) + '%');
+          stage.style.setProperty('--my', (cy * 100).toFixed(2) + '%');
+          lensEl.style.transform = 'translate(' + (cx * b.width - 270).toFixed(1) + 'px,' + (cy * b.height - 270).toFixed(1) + 'px)';
+        }
       }
-      requestAnimationFrame(lens);
+      requestAnimationFrame(tick);
     }
-    if (!reduce) requestAnimationFrame(lens);
+    requestAnimationFrame(tick);
 
     // email signup
     document.getElementById('signupForm').addEventListener('submit', function(e) {
