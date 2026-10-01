@@ -491,6 +491,18 @@
     ══════════════════════════════ */
     @media (max-width: 760px) {
       .hero-title { width: min(460px, 82vw); }
+      .hero-bg, .hero-ghost { --pos: 66% 30%; }
+      .bleed.fit {
+        height: clamp(340px, 64svh, 540px); display: flex; align-items: flex-start; padding-top: 14%; margin-top: 0 !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
+      }
+      .bleed.fit:not(:has(.over)) { align-items: center; padding-top: 0; height: clamp(260px, 44svh, 400px); }
+      .bleed.fit::before { content: ''; position: absolute; inset: -30px; background: var(--bg) center / cover; filter: blur(22px) brightness(0.4) saturate(0.9); }
+      .bleed.fit img { position: relative; z-index: 1; width: 100%; height: auto; object-fit: contain; filter: brightness(0.82) saturate(0.92); }
+      .bleed.fit::after { display: none; }
+      .bleed.fit .over { justify-content: flex-end; padding-bottom: 6%; z-index: 2; }
+      .bleed.fit blockquote { font-size: clamp(1.25rem, 6vw, 1.7rem); margin-bottom: 14px; }
       .split, .director-grid { grid-template-columns: 1fr; }
       .split { padding: 64px 24px; }
       .split.flip .split-text { order: 0; }
@@ -594,7 +606,7 @@
 
 
   <!-- ══ II · THE WALK (quote) ══ -->
-  <figure class="bleed" style="--pos: center 40%">
+  <figure class="bleed fit" style="--pos: center 40%; --bg: url('stills/14-glass.jpg')">
     <img data-speed="0.12" src="stills/14-glass.jpg" alt="Lex and Milo seen through glass and reflection" loading="lazy">
     <div class="over reveal">
       <blockquote>"I just wish you'd let me say goodbye."</blockquote>
@@ -602,13 +614,13 @@
     </div>
   </figure>
 
-  <figure class="bleed" style="--pos: center 45%; margin-top: -12svh">
+  <figure class="bleed fit" style="--pos: center 45%; margin-top: -12svh; --bg: url('stills/05-walk.jpg')">
     <img data-speed="0.12" src="stills/05-walk.jpg" alt="Two men walking side by side down a night street, seen from behind" loading="lazy">
   </figure>
 
 
   <!-- ══ III · THE GOODBYE (director) ══ -->
-  <figure class="bleed" style="--pos: center 40%">
+  <figure class="bleed fit" style="--pos: center 40%; --bg: url('stills/18-hug.jpg')">
     <img data-speed="0.12" src="stills/18-hug.jpg" alt="Two men embracing, one's face turned into the other's shoulder" loading="lazy">
     <div class="over reveal">
       <p class="chapter">ii</p>
