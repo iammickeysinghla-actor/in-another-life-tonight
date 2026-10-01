@@ -337,33 +337,36 @@
     /* ══════════════════════════════
        STILLS
     ══════════════════════════════ */
-    .stills-section { padding: 90px 0 60px; overflow: hidden; }
-    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 56px; }
-    .collage { position: relative; height: 124cqw; container-type: inline-size; }
-    .stills-wrap { container-type: inline-size; }
+    .stills-section { padding: 90px 0 70px; }
+    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 40px; }
+    .reel-head {
+      display: flex; justify-content: space-between; align-items: center;
+      max-width: 1100px; margin: 0 auto 22px; padding: 0 24px;
+      font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.34em; color: var(--c40); text-transform: lowercase;
+    }
+    .reel-head button { background: none; border: 0; cursor: pointer; font: inherit; letter-spacing: 0.34em; color: var(--c70); padding: 6px 4px; transition: color 0.3s; }
+    .reel-head button:hover { color: var(--rose); }
+    .reel-count b { font-weight: 300; color: var(--rose); }
+    .reel {
+      display: flex; gap: 14px; align-items: center;
+      overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
+      padding: 0 max(24px, calc((100vw - 1100px) / 2)) 8px;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+              mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    }
+    .reel::-webkit-scrollbar { display: none; }
     .still {
-      position: absolute; display: block; padding: 0; border: 0; cursor: zoom-in;
-      left: var(--l); top: calc(var(--t) * 1cqw); width: calc(var(--w) * 1cqw);
-      aspect-ratio: 16 / 9; z-index: var(--z, 1);
-      rotate: var(--rot, 0deg); translate: 0 var(--dy, 0px);
-      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
-      transition: rotate 0.6s cubic-bezier(0.16,1,0.3,1), scale 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s;
+      flex: 0 0 auto; height: clamp(240px, 52vh, 500px); aspect-ratio: 16 / 9;
+      scroll-snap-align: center; position: relative; padding: 0; border: 0; cursor: zoom-in; background: var(--bg);
     }
-    .still img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); filter: brightness(0.74) saturate(0.85); transition: filter 0.6s; }
-    .still::after {
-      content: attr(data-n); position: absolute; left: 10px; bottom: 8px;
-      font-family: var(--font); font-weight: 300; font-size: 0.56rem; letter-spacing: 0.3em; color: var(--rose); opacity: 0.9;
-      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
-    }
-    .still:hover, .still:focus-visible { rotate: 0deg; scale: 1.08; z-index: 50; box-shadow: 0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(212,155,203,0.35); }
-    .still:hover img, .still:focus-visible img { filter: brightness(1) saturate(1); }
-    .still:focus-visible { outline: none; }
-    @media (max-width: 760px) {
-      .collage { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; padding: 0 14px 30px; }
-      .still { position: relative; left: auto; top: auto; width: 100%; }
-      .still:nth-child(5n+1) { grid-column: span 2; }
-      .still:nth-child(even) { margin-top: 18px; }
-    }
+    .still.tall { aspect-ratio: 4 / 5; }
+    .still img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); filter: brightness(0.62) saturate(0.82); transition: filter 0.8s ease; }
+    .reel:hover .still:not(:hover) img { filter: brightness(0.4) saturate(0.7); }
+    .still:hover img, .still:focus-visible img { filter: brightness(0.95) saturate(1); }
+    .still:focus-visible { outline: 1px solid var(--rose); outline-offset: 3px; }
+    .reel-bar { max-width: 1100px; margin: 22px auto 0; padding: 0 24px; }
+    .reel-bar div { height: 1px; background: var(--c18); position: relative; }
+    .reel-bar i { position: absolute; left: 0; top: 0; height: 1px; width: 10%; background: var(--rose); transition: width 0.2s; }
 
     .lightbox {
       position: fixed; inset: 0; z-index: 9500; background: rgba(5,12,16,0.96);
@@ -402,6 +405,7 @@
     .credit-name { text-transform: lowercase; }
     .bg-block { border-top: 1px solid var(--c18); margin-top: 48px; padding-top: 44px; text-align: center; }
     .bg-list { line-height: 2; max-width: 720px; margin: 0 auto; }
+    .keep { text-transform: none; }
     .song { grid-column: 1 / -1; }
 
     /* ══════════════════════════════
@@ -496,7 +500,7 @@
       <p class="hero-tagline">some goodbyes don't exist. so you build them.</p>
     </div>
 
-    <p class="hero-meta hero-foot">Short Film &nbsp;<span>·</span>&nbsp; 2026 &nbsp;<span>·</span>&nbsp; a sunset III film</p>
+    <p class="hero-meta hero-foot">Short Film &nbsp;<span>·</span>&nbsp; 2026 &nbsp;<span>·</span>&nbsp; a sunset <span class="keep">III</span> film</p>
   </section>
 
 
@@ -528,7 +532,7 @@
     <div class="characters-grid">
 
       <div class="character-card" id="card-milo">
-        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 48% center">
+        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 56% center">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Our entire lens</p>
         <p class="character-name">Milo</p>
@@ -553,7 +557,7 @@
       </div>
 
       <div class="character-card" id="card-lex">
-        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 55% center">
+        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 47% center">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Presence and absence</p>
         <p class="character-name">Lex</p>
@@ -581,8 +585,6 @@
   <figure class="bleed" style="--pos: center 40%">
     <img data-speed="0.12" src="stills/14-glass.jpg" alt="Lex and Milo seen through glass and reflection" loading="lazy">
     <div class="over reveal">
-      <p class="chapter">ii</p>
-      <p class="chapter-title" style="margin-bottom: 56px">the walk</p>
       <blockquote>"I just wish you'd let me say goodbye."</blockquote>
       <p class="q-attr">— Milo</p>
     </div>
@@ -597,7 +599,7 @@
   <figure class="bleed" style="--pos: center 40%">
     <img data-speed="0.12" src="stills/18-hug.jpg" alt="Two men embracing, one's face turned into the other's shoulder" loading="lazy">
     <div class="over reveal">
-      <p class="chapter">iii</p>
+      <p class="chapter">ii</p>
       <p class="chapter-title">the goodbye</p>
     </div>
   </figure>
@@ -606,7 +608,7 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 27% center">
+        <div class="plate" style="--pos: 33% center">
           <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
@@ -630,26 +632,29 @@
   <!-- ══ STILLS ══ -->
   <section class="stills-section reveal" id="stills">
     <p class="section-label">stills</p>
-    <div class="stills-wrap">
-      <div class="collage">
-        <button class="still" data-n="13" data-drift="0.05" style="--w:46;--l:3%;--t:0;--rot:-1.5deg;--z:1;--pos:center 40%"><img src="stills/13-embrace-silhouette.jpg" alt="silhouette" loading="lazy"></button>
-        <button class="still" data-n="03" data-drift="-0.04" style="--w:30;--l:52%;--t:6;--rot:2deg;--z:2;--pos:62% 25%"><img src="stills/03-table-head-back.jpg" alt="head back" loading="lazy"></button>
-        <button class="still" data-n="05" data-drift="0.07" style="--w:24;--l:74%;--t:20;--rot:-2deg;--z:3;--pos:center"><img src="stills/05-walk.jpg" alt="walk" loading="lazy"></button>
-        <button class="still" data-n="18" data-drift="-0.06" style="--w:30;--l:8%;--t:24;--rot:1.5deg;--z:4;--pos:center 40%"><img src="stills/18-hug.jpg" alt="hug" loading="lazy"></button>
-        <button class="still" data-n="12" data-drift="0.03" style="--w:34;--l:40%;--t:26;--rot:-1deg;--z:5;--pos:center"><img src="stills/12-milo-fork.jpg" alt="fork" loading="lazy"></button>
-        <button class="still" data-n="15" data-drift="0.05" style="--w:20;--l:76%;--t:36;--rot:2.5deg;--z:6;--pos:center 30%"><img src="stills/15-lex-smile.jpg" alt="smile" loading="lazy"></button>
-        <button class="still" data-n="14" data-drift="-0.04" style="--w:40;--l:2%;--t:44;--rot:-2deg;--z:7;--pos:center"><img src="stills/14-glass.jpg" alt="glass" loading="lazy"></button>
-        <button class="still" data-n="07" data-drift="0.07" style="--w:26;--l:44%;--t:48;--rot:1.5deg;--z:8;--pos:center 30%"><img src="stills/07-lex-menu.jpg" alt="menu" loading="lazy"></button>
-        <button class="still" data-n="04" data-drift="-0.06" style="--w:24;--l:72%;--t:50;--rot:-1.5deg;--z:9;--pos:center 30%"><img src="stills/04-milo-laugh.jpg" alt="laugh" loading="lazy"></button>
-        <button class="still" data-n="16" data-drift="0.03" style="--w:44;--l:52%;--t:66;--rot:1deg;--z:10;--pos:center 35%"><img src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></button>
-        <button class="still" data-n="11" data-drift="0.05" style="--w:28;--l:6%;--t:70;--rot:2deg;--z:11;--pos:center"><img src="stills/11-lex-arms.jpg" alt="arms crossed" loading="lazy"></button>
-        <button class="still" data-n="08" data-drift="-0.04" style="--w:20;--l:36%;--t:80;--rot:-2deg;--z:12;--pos:center 30%"><img src="stills/08-lex-listening.jpg" alt="listening" loading="lazy"></button>
-        <button class="still" data-n="17" data-drift="0.07" style="--w:40;--l:4%;--t:90;--rot:-1deg;--z:13;--pos:center 35%"><img src="stills/17-close.jpg" alt="close" loading="lazy"></button>
-        <button class="still" data-n="10" data-drift="-0.06" style="--w:30;--l:48%;--t:94;--rot:2deg;--z:14;--pos:center 30%"><img src="stills/10-milo-chin.jpg" alt="chin in hand" loading="lazy"></button>
-        <button class="still" data-n="09" data-drift="0.03" style="--w:22;--l:78%;--t:88;--rot:-2.5deg;--z:15;--pos:62% center"><img src="stills/09-lex-tiramisu.jpg" alt="tiramisu" loading="lazy"></button>
-        <button class="still" data-n="06" data-drift="0.05" style="--w:24;--l:30%;--t:108;--rot:1.5deg;--z:16;--pos:center 30%"><img src="stills/06-milo-menu.jpg" alt="menu" loading="lazy"></button>
-      </div>
+    <div class="reel-head">
+      <span class="reel-count"><b id="reelNow">01</b> / 16</span>
+      <span><button id="reelPrev" aria-label="Previous">‹</button> &nbsp; <button id="reelNext" aria-label="Next">›</button></span>
     </div>
+    <div class="reel" id="reel">
+        <button class="still" style="--pos:center 40%"><img src="stills/13-embrace-silhouette.jpg" alt="embrace in silhouette" loading="lazy"></button>
+        <button class="still tall" style="--pos:62% 25%"><img src="stills/03-table-head-back.jpg" alt="milo at the table, head tipped back" loading="lazy"></button>
+        <button class="still tall" style="--pos:50% 30%"><img src="stills/06-milo-menu.jpg" alt="milo over the menu" loading="lazy"></button>
+        <button class="still" style="--pos:center"><img src="stills/05-walk.jpg" alt="walking home" loading="lazy"></button>
+        <button class="still tall" style="--pos:50% 30%"><img src="stills/08-lex-listening.jpg" alt="lex listening" loading="lazy"></button>
+        <button class="still" style="--pos:center"><img src="stills/14-glass.jpg" alt="through the glass" loading="lazy"></button>
+        <button class="still tall" style="--pos:55% 30%"><img src="stills/10-milo-chin.jpg" alt="milo, chin in hand" loading="lazy"></button>
+        <button class="still" style="--pos:center"><img src="stills/11-lex-arms.jpg" alt="lex, arms folded" loading="lazy"></button>
+        <button class="still" style="--pos:center 35%"><img src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></button>
+        <button class="still tall" style="--pos:50% 30%"><img src="stills/04-milo-laugh.jpg" alt="milo laughing" loading="lazy"></button>
+        <button class="still" style="--pos:60% center"><img src="stills/09-lex-tiramisu.jpg" alt="lex and the tiramisu" loading="lazy"></button>
+        <button class="still" style="--pos:center 40%"><img src="stills/18-hug.jpg" alt="an embrace" loading="lazy"></button>
+        <button class="still tall" style="--pos:50% 30%"><img src="stills/15-lex-smile.jpg" alt="lex smiling" loading="lazy"></button>
+        <button class="still" style="--pos:center"><img src="stills/12-milo-fork.jpg" alt="milo with a fork" loading="lazy"></button>
+        <button class="still tall" style="--pos:50% 30%"><img src="stills/07-lex-menu.jpg" alt="lex over the menu" loading="lazy"></button>
+        <button class="still" style="--pos:center 35%"><img src="stills/17-close.jpg" alt="close" loading="lazy"></button>
+    </div>
+    <div class="reel-bar"><div><i id="reelBar"></i></div></div>
   </section>
 
 
@@ -679,13 +684,14 @@
       <div><p class="credit-label">key grip</p><p class="credit-name">eduardo i contreras</p></div>
       <div><p class="credit-label">grip</p><p class="credit-name">daniel fuentes</p></div>
       <div><p class="credit-label">sound mixer</p><p class="credit-name">darrian smith</p></div>
+      <div><p class="credit-label">poster designer</p><p class="credit-name">lucila casas</p></div>
       <div><p class="credit-label">production designer</p><p class="credit-name">alondra miguel</p></div>
       <div><p class="credit-label">intimacy coordinator</p><p class="credit-name">rica j. anonas</p></div>
       <div><p class="credit-label">edited by</p><p class="credit-name">mekhi burton</p></div>
       <div><p class="credit-label">sound design</p><p class="credit-name">eduard boev</p></div>
       <div><p class="credit-label">music</p><p class="credit-name">isaac haines</p></div>
       <div><p class="credit-label">original song</p><p class="credit-name">charlie albalad &amp; strand hill</p></div>
-      <div class="song"><p class="credit-label">production</p><p class="credit-name">a sunset iii film</p></div>
+      <div class="song"><p class="credit-label">production</p><p class="credit-name">a sunset <span class="keep">III</span> film</p></div>
     </div>
 
     <div class="bg-block">
@@ -720,7 +726,7 @@
 
   <footer>
     <p>in another life, TONIGHT &nbsp;·&nbsp; 2026</p>
-    <p>a sunset III film &nbsp;·&nbsp; all rights reserved</p>
+    <p>a sunset <span class="keep">III</span> film &nbsp;·&nbsp; all rights reserved</p>
   </footer>
 
 
@@ -759,17 +765,22 @@
       parallax();
     }
 
-    // stills drift at different speeds as you scroll
-    const prints = [...document.querySelectorAll('.still')];
-    function drifting() {
-      if (innerWidth <= 760) return;
-      prints.forEach(el => {
-        const r = el.getBoundingClientRect();
-        if (r.bottom < -200 || r.top > innerHeight + 200) return;
-        el.style.setProperty('--dy', ((r.top + r.height / 2 - innerHeight / 2) * parseFloat(el.dataset.drift) * 1.4).toFixed(1) + 'px');
-      });
+    // stills reel
+    const reel = document.getElementById('reel');
+    const frames = [...reel.children];
+    function reelUpdate() {
+      const max = reel.scrollWidth - reel.clientWidth;
+      document.getElementById('reelBar').style.width = (10 + 90 * (max ? reel.scrollLeft / max : 0)) + '%';
+      const mid = reel.scrollLeft + reel.clientWidth / 2;
+      let n = 0, best = 1e9;
+      frames.forEach((f, i) => { const d = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid); if (d < best) { best = d; n = i; } });
+      document.getElementById('reelNow').textContent = String(n + 1).padStart(2, '0');
     }
-    if (!reduce) { addEventListener('scroll', () => requestAnimationFrame(drifting), { passive: true }); drifting(); }
+    reel.addEventListener('scroll', reelUpdate, { passive: true });
+    const step = () => Math.max(300, reel.clientWidth * 0.6);
+    document.getElementById('reelPrev').onclick = () => reel.scrollBy({ left: -step(), behavior: 'smooth' });
+    document.getElementById('reelNext').onclick = () => reel.scrollBy({ left: step(), behavior: 'smooth' });
+    reelUpdate();
 
     // email signup
     document.getElementById('signupForm').addEventListener('submit', function(e) {
