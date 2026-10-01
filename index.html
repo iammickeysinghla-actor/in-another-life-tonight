@@ -144,7 +144,7 @@
       padding: 64px 24px 84px;
     }
     .hero-bg {
-      position: absolute; top: 9%; left: -22.8%; width: 125%; max-width: none; height: 100%;
+      position: absolute; top: 3%; left: -22.8%; width: 125%; max-width: none; height: 100%;
       -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%); mask-image: linear-gradient(to bottom, transparent 0%, #000 14%);
       --pos: 62% 30%;
       transform-origin: 58% 30%;
@@ -238,13 +238,13 @@
     /* ══════════════════════════════
        CHARACTERS — portrait behind each card
     ══════════════════════════════ */
-    .characters-section { padding: 40px 24px 100px; max-width: 1100px; margin: 0 auto; }
+    .characters-section { padding: 40px 24px 100px; max-width: 940px; margin: 0 auto; }
 
-    .characters-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; margin-top: 8px; }
+    .characters-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-top: 8px; }
 
     .character-card {
       position: relative; overflow: hidden; cursor: pointer;
-      min-height: clamp(420px, 44vw, 560px);
+      min-height: clamp(440px, 52vw, 600px);
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: 36px 26px 34px; background: var(--bg);
     }
@@ -337,19 +337,33 @@
     /* ══════════════════════════════
        STILLS
     ══════════════════════════════ */
-    .stills-section { padding: 90px 3px 40px; }
-    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 40px; }
-    .stills-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; }
-    .still { position: relative; overflow: hidden; aspect-ratio: 16 / 9; grid-column: span 2; cursor: zoom-in; background: var(--bg); border: 0; padding: 0; }
-    .still.wide { grid-column: span 3; }
-    .still.full { grid-column: span 6; aspect-ratio: 21 / 9; }
-    .still img {
-      width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center);
-      filter: brightness(0.7) saturate(0.82);
-      transition: filter 0.7s ease, transform 1.2s ease;
+    .stills-section { padding: 90px 0 60px; overflow: hidden; }
+    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 56px; }
+    .collage { position: relative; height: 124cqw; container-type: inline-size; }
+    .stills-wrap { container-type: inline-size; }
+    .still {
+      position: absolute; display: block; padding: 0; border: 0; cursor: zoom-in;
+      left: var(--l); top: calc(var(--t) * 1cqw); width: calc(var(--w) * 1cqw);
+      aspect-ratio: 16 / 9; z-index: var(--z, 1);
+      rotate: var(--rot, 0deg); translate: 0 var(--dy, 0px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.55);
+      transition: rotate 0.6s cubic-bezier(0.16,1,0.3,1), scale 0.6s cubic-bezier(0.16,1,0.3,1), box-shadow 0.6s;
     }
-    .still:hover img, .still:focus-visible img { filter: brightness(0.95) saturate(1); transform: scale(1.04); }
-    .still:focus-visible { outline: 1px solid var(--rose); outline-offset: -3px; }
+    .still img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); filter: brightness(0.74) saturate(0.85); transition: filter 0.6s; }
+    .still::after {
+      content: attr(data-n); position: absolute; left: 10px; bottom: 8px;
+      font-family: var(--font); font-weight: 300; font-size: 0.56rem; letter-spacing: 0.3em; color: var(--rose); opacity: 0.9;
+      text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+    }
+    .still:hover, .still:focus-visible { rotate: 0deg; scale: 1.08; z-index: 50; box-shadow: 0 30px 90px rgba(0,0,0,0.75), 0 0 0 1px rgba(212,155,203,0.35); }
+    .still:hover img, .still:focus-visible img { filter: brightness(1) saturate(1); }
+    .still:focus-visible { outline: none; }
+    @media (max-width: 760px) {
+      .collage { height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 10px; padding: 0 14px 30px; }
+      .still { position: relative; left: auto; top: auto; width: 100%; }
+      .still:nth-child(5n+1) { grid-column: span 2; }
+      .still:nth-child(even) { margin-top: 18px; }
+    }
 
     .lightbox {
       position: fixed; inset: 0; z-index: 9500; background: rgba(5,12,16,0.96);
@@ -370,8 +384,8 @@
     /* ══════════════════════════════
        CREDITS
     ══════════════════════════════ */
-    .credits-section { padding: 100px 24px 90px; max-width: 900px; margin: 0 auto; }
-    .credits-top { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 52px; margin: 8px 0 56px; text-align: center; }
+    .credits-section { padding: 100px 24px 90px; max-width: 1000px; margin: 0 auto; }
+    .credits-top { display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px 52px; margin: 8px 0 56px; text-align: center; }
     .credit-label {
       font-family: var(--font); font-weight: 300;
       font-size: 0.62rem; letter-spacing: 0.3em; text-transform: lowercase;
@@ -383,6 +397,11 @@
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 32px;
       border-top: 1px solid var(--c18); padding-top: 48px; text-align: center;
     }
+    .cast-name { font-family: var(--font); font-weight: 300; font-size: clamp(1.15rem, 2vw, 1.5rem); color: var(--rose); letter-spacing: 0.03em; text-transform: lowercase; }
+    .cast-name span { color: var(--cream); }
+    .credit-name { text-transform: lowercase; }
+    .bg-block { border-top: 1px solid var(--c18); margin-top: 48px; padding-top: 44px; text-align: center; }
+    .bg-list { line-height: 2; max-width: 720px; margin: 0 auto; }
     .song { grid-column: 1 / -1; }
 
     /* ══════════════════════════════
@@ -453,7 +472,7 @@
       .stills-grid { grid-template-columns: 1fr 1fr; }
       .still, .still.wide { grid-column: span 1; }
       .still.full { grid-column: span 2; aspect-ratio: 16 / 9; }
-      .credits-top { grid-template-columns: 1fr; gap: 32px; }
+      .credits-top { grid-template-columns: 1fr 1fr; gap: 32px; }
       .credits-grid { grid-template-columns: 1fr 1fr; }
       .email-form { flex-direction: column; }
       .email-form button { border-left: none; border-top: 1px solid var(--rose-ln); }
@@ -504,7 +523,7 @@
 
   <!-- characters -->
   <section class="characters-section reveal">
-    <p class="section-label">The Characters</p>
+    <p class="section-label">the two of them</p>
 
     <div class="characters-grid">
 
@@ -554,27 +573,7 @@
         </div>
       </div>
 
-      <div class="character-card" id="card-ray">
-        <img class="portrait" src="stills/03-table-head-back.jpg" alt="" loading="lazy" style="--pos: 4% center">
-        <span class="character-tap-hint">learn more</span>
-        <p class="character-role">The friend</p>
-        <p class="character-name">Ray</p>
-        <p class="character-tagline">the one who's here</p>
-        <div class="character-detail">
-          <div class="char-divider"></div>
-          <div class="char-row">
-            <p class="char-row-label">Who he is</p>
-            <p class="char-row-text">Loud, loyal, and always up for a good night out.</p>
           </div>
-          <div class="char-row">
-            <p class="char-row-label">What he sees</p>
-            <p class="char-row-text">He doesn't know the whole story, but he notices when Milo goes quiet.</p>
-          </div>
-          <span class="char-close" onclick="closeCard('card-ray')">close</span>
-        </div>
-      </div>
-
-    </div>
   </section>
 
 
@@ -607,7 +606,7 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 36% center">
+        <div class="plate" style="--pos: 27% center">
           <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
@@ -630,57 +629,68 @@
 
   <!-- ══ STILLS ══ -->
   <section class="stills-section reveal" id="stills">
-    <p class="section-label">Stills</p>
-    <div class="stills-grid">
-      <button class="still full" style="--pos: center 40%"><img src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy"></button>
-      <button class="still"><img src="stills/03-table-head-back.jpg" alt="Milo with his head tipped back, eyes closed, at an empty table" loading="lazy" style="--pos: 62% 25%"></button>
-      <button class="still"><img src="stills/07-lex-menu.jpg" alt="Lex smiling down at the menu" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still"><img src="stills/04-milo-laugh.jpg" alt="Milo laughing" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still wide"><img src="stills/12-milo-fork.jpg" alt="Milo resting his cheek on his fist, a fork in his hand" loading="lazy"></button>
-      <button class="still wide"><img src="stills/11-lex-arms.jpg" alt="Lex, arms folded on the table, smiling at the tiramisu" loading="lazy"></button>
-      <button class="still"><img src="stills/08-lex-listening.jpg" alt="Lex listening" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still"><img src="stills/15-lex-smile.jpg" alt="Lex smiling at Milo, who has his back to us" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still"><img src="stills/06-milo-menu.jpg" alt="Milo smiling over a menu" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still wide"><img src="stills/05-walk.jpg" alt="Two men walking down a night street" loading="lazy"></button>
-      <button class="still wide"><img src="stills/17-close.jpg" alt="Milo and Lex, foreheads almost touching" loading="lazy" style="--pos: center 35%"></button>
-      <button class="still"><img src="stills/10-milo-chin.jpg" alt="Milo, chin in hand, smiling" loading="lazy" style="--pos: center 30%"></button>
-      <button class="still"><img src="stills/09-lex-tiramisu.jpg" alt="Lex and the tiramisu" loading="lazy" style="--pos: 62% center"></button>
-      <button class="still"><img src="stills/18-hug.jpg" alt="An embrace" loading="lazy" style="--pos: 62% center"></button>
-      <button class="still wide"><img src="stills/14-glass.jpg" alt="Lex and Milo through glass" loading="lazy"></button>
-      <button class="still wide"><img src="stills/16-face-to-face.jpg" alt="Milo and Lex laughing, face to face" loading="lazy" style="--pos: center 35%"></button>
+    <p class="section-label">stills</p>
+    <div class="stills-wrap">
+      <div class="collage">
+        <button class="still" data-n="13" data-drift="0.05" style="--w:46;--l:3%;--t:0;--rot:-1.5deg;--z:1;--pos:center 40%"><img src="stills/13-embrace-silhouette.jpg" alt="silhouette" loading="lazy"></button>
+        <button class="still" data-n="03" data-drift="-0.04" style="--w:30;--l:52%;--t:6;--rot:2deg;--z:2;--pos:62% 25%"><img src="stills/03-table-head-back.jpg" alt="head back" loading="lazy"></button>
+        <button class="still" data-n="05" data-drift="0.07" style="--w:24;--l:74%;--t:20;--rot:-2deg;--z:3;--pos:center"><img src="stills/05-walk.jpg" alt="walk" loading="lazy"></button>
+        <button class="still" data-n="18" data-drift="-0.06" style="--w:30;--l:8%;--t:24;--rot:1.5deg;--z:4;--pos:center 40%"><img src="stills/18-hug.jpg" alt="hug" loading="lazy"></button>
+        <button class="still" data-n="12" data-drift="0.03" style="--w:34;--l:40%;--t:26;--rot:-1deg;--z:5;--pos:center"><img src="stills/12-milo-fork.jpg" alt="fork" loading="lazy"></button>
+        <button class="still" data-n="15" data-drift="0.05" style="--w:20;--l:76%;--t:36;--rot:2.5deg;--z:6;--pos:center 30%"><img src="stills/15-lex-smile.jpg" alt="smile" loading="lazy"></button>
+        <button class="still" data-n="14" data-drift="-0.04" style="--w:40;--l:2%;--t:44;--rot:-2deg;--z:7;--pos:center"><img src="stills/14-glass.jpg" alt="glass" loading="lazy"></button>
+        <button class="still" data-n="07" data-drift="0.07" style="--w:26;--l:44%;--t:48;--rot:1.5deg;--z:8;--pos:center 30%"><img src="stills/07-lex-menu.jpg" alt="menu" loading="lazy"></button>
+        <button class="still" data-n="04" data-drift="-0.06" style="--w:24;--l:72%;--t:50;--rot:-1.5deg;--z:9;--pos:center 30%"><img src="stills/04-milo-laugh.jpg" alt="laugh" loading="lazy"></button>
+        <button class="still" data-n="16" data-drift="0.03" style="--w:44;--l:52%;--t:66;--rot:1deg;--z:10;--pos:center 35%"><img src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></button>
+        <button class="still" data-n="11" data-drift="0.05" style="--w:28;--l:6%;--t:70;--rot:2deg;--z:11;--pos:center"><img src="stills/11-lex-arms.jpg" alt="arms crossed" loading="lazy"></button>
+        <button class="still" data-n="08" data-drift="-0.04" style="--w:20;--l:36%;--t:80;--rot:-2deg;--z:12;--pos:center 30%"><img src="stills/08-lex-listening.jpg" alt="listening" loading="lazy"></button>
+        <button class="still" data-n="17" data-drift="0.07" style="--w:40;--l:4%;--t:90;--rot:-1deg;--z:13;--pos:center 35%"><img src="stills/17-close.jpg" alt="close" loading="lazy"></button>
+        <button class="still" data-n="10" data-drift="-0.06" style="--w:30;--l:48%;--t:94;--rot:2deg;--z:14;--pos:center 30%"><img src="stills/10-milo-chin.jpg" alt="chin in hand" loading="lazy"></button>
+        <button class="still" data-n="09" data-drift="0.03" style="--w:22;--l:78%;--t:88;--rot:-2.5deg;--z:15;--pos:62% center"><img src="stills/09-lex-tiramisu.jpg" alt="tiramisu" loading="lazy"></button>
+        <button class="still" data-n="06" data-drift="0.05" style="--w:24;--l:30%;--t:108;--rot:1.5deg;--z:16;--pos:center 30%"><img src="stills/06-milo-menu.jpg" alt="menu" loading="lazy"></button>
+      </div>
     </div>
   </section>
 
 
   <!-- ══ CREDITS ══ -->
   <section class="credits-section reveal">
-    <p class="section-label">Cast &amp; Crew</p>
+    <p class="section-label">cast &amp; crew</p>
 
     <div class="credits-top">
-      <div>
-        <p class="credit-label">Milo</p>
-        <p class="credit-name lead">Mickey Singh</p>
-      </div>
-      <div>
-        <p class="credit-label">Lex</p>
-        <p class="credit-name lead">Christopher Bencomo</p>
-      </div>
+      <div><p class="credit-label">milo</p><p class="cast-name"><span>mickey</span> singh</p></div>
+      <div><p class="credit-label">lex</p><p class="cast-name"><span>christopher</span> bencomo</p></div>
+      <div><p class="credit-label">ray</p><p class="cast-name"><span>mateen</span> bizar</p></div>
+      <div><p class="credit-label">server</p><p class="cast-name"><span>charles</span> albalad</p></div>
     </div>
 
     <div class="credits-grid">
-      <div><p class="credit-label">Directed by</p><p class="credit-name">Mickey Singh</p></div>
-      <div><p class="credit-label">Written by</p><p class="credit-name">Mickey Singh</p></div>
-      <div><p class="credit-label">Executive Producer</p><p class="credit-name">Mickey Singh</p></div>
-      <div><p class="credit-label">Produced by</p><p class="credit-name">Nidhin Patel</p></div>
-      <div><p class="credit-label">Associate Producers</p><p class="credit-name">Shelley Truong<br>Charlie Albalad</p></div>
-      <div><p class="credit-label">Creative Supervisor</p><p class="credit-name">Anthony Tacheny</p></div>
-      <div><p class="credit-label">Director of Photography</p><p class="credit-name">Sydney Kaplan</p></div>
-      <div><p class="credit-label">Production Designer</p><p class="credit-name">Alondra Miguel</p></div>
-      <div><p class="credit-label">Edited by</p><p class="credit-name">Mekhi Burton</p></div>
-      <div><p class="credit-label">Sound Design</p><p class="credit-name">Eduard Boev</p></div>
-      <div><p class="credit-label">Music</p><p class="credit-name">Isaac Haines</p></div>
-      <div><p class="credit-label">Original Song</p><p class="credit-name">Charlie Albalad &amp; Strand Hill</p></div>
-      <div class="song"><p class="credit-label">Production</p><p class="credit-name">a sunset III film</p></div>
+      <div><p class="credit-label">directed by</p><p class="credit-name">mickey singh</p></div>
+      <div><p class="credit-label">written by</p><p class="credit-name">mickey singh</p></div>
+      <div><p class="credit-label">executive producer</p><p class="credit-name">mickey singh</p></div>
+      <div><p class="credit-label">produced by</p><p class="credit-name">nidhin patel</p></div>
+      <div><p class="credit-label">associate producers</p><p class="credit-name">shelley truong<br>charlie albalad</p></div>
+      <div><p class="credit-label">creative supervisor</p><p class="credit-name">anthony tacheny</p></div>
+      <div><p class="credit-label">1st assistant director</p><p class="credit-name">shelley truong</p></div>
+      <div><p class="credit-label">director of photography</p><p class="credit-name">sydney kaplan</p></div>
+      <div><p class="credit-label">1st ac</p><p class="credit-name">christine mouton</p></div>
+      <div><p class="credit-label">2nd ac</p><p class="credit-name">matt gonzalez</p></div>
+      <div><p class="credit-label">gaffer</p><p class="credit-name">eden moshe</p></div>
+      <div><p class="credit-label">key grip</p><p class="credit-name">eduardo i contreras</p></div>
+      <div><p class="credit-label">grip</p><p class="credit-name">daniel fuentes</p></div>
+      <div><p class="credit-label">sound mixer</p><p class="credit-name">darrian smith</p></div>
+      <div><p class="credit-label">production designer</p><p class="credit-name">alondra miguel</p></div>
+      <div><p class="credit-label">intimacy coordinator</p><p class="credit-name">rica j. anonas</p></div>
+      <div><p class="credit-label">edited by</p><p class="credit-name">mekhi burton</p></div>
+      <div><p class="credit-label">sound design</p><p class="credit-name">eduard boev</p></div>
+      <div><p class="credit-label">music</p><p class="credit-name">isaac haines</p></div>
+      <div><p class="credit-label">original song</p><p class="credit-name">charlie albalad &amp; strand hill</p></div>
+      <div class="song"><p class="credit-label">production</p><p class="credit-name">a sunset iii film</p></div>
+    </div>
+
+    <div class="bg-block">
+      <p class="credit-label">background actors</p>
+      <p class="credit-name bg-list">jordan david hadley &nbsp;·&nbsp; mariah luna &nbsp;·&nbsp; jaxon roberts &nbsp;·&nbsp; johnnie kay manzana &nbsp;·&nbsp; julio c. martínez valle &nbsp;·&nbsp; ricardo castro torres &nbsp;·&nbsp; erin sweeney scheier &nbsp;·&nbsp; rica j. anonas</p>
     </div>
   </section>
 
@@ -748,6 +758,18 @@
       addEventListener('resize', parallax);
       parallax();
     }
+
+    // stills drift at different speeds as you scroll
+    const prints = [...document.querySelectorAll('.still')];
+    function drifting() {
+      if (innerWidth <= 760) return;
+      prints.forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.bottom < -200 || r.top > innerHeight + 200) return;
+        el.style.setProperty('--dy', ((r.top + r.height / 2 - innerHeight / 2) * parseFloat(el.dataset.drift) * 1.4).toFixed(1) + 'px');
+      });
+    }
+    if (!reduce) { addEventListener('scroll', () => requestAnimationFrame(drifting), { passive: true }); drifting(); }
 
     // email signup
     document.getElementById('signupForm').addEventListener('submit', function(e) {
