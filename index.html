@@ -144,9 +144,10 @@
       padding: 64px 24px 84px;
     }
     .hero-bg {
-      position: absolute; top: 0; left: -22.8%; width: 125%; max-width: none; height: 100%;
+      position: absolute; top: 9%; left: -22.8%; width: 125%; max-width: none; height: 100%;
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%); mask-image: linear-gradient(to bottom, transparent 0%, #000 14%);
       --pos: 62% 30%;
-      transform-origin: 58% 40%;
+      transform-origin: 58% 30%;
       filter: brightness(0.82) saturate(0.95);
       animation: slowZoom 28s ease-in-out infinite alternate;
     }
@@ -168,18 +169,20 @@
       font-family: var(--font); font-weight: 300; font-size: 0.6rem;
       letter-spacing: 0.32em; text-transform: lowercase; color: var(--c70);
     }
+    .hero-by { font-size: clamp(0.8rem, 1.1vw, 0.98rem) !important; letter-spacing: 0.34em !important; color: var(--cream) !important; }
     .hero-by { position: absolute; top: 32px; left: 0; right: 0; text-align: center; z-index: 1; }
     .hero-by b { font-weight: 300; color: var(--rose); }
     .hero-title { width: min(460px, 72vw); height: auto; margin: 0 auto; }
     .hero-tagline {
-      font-family: var(--font); font-style: normal;
-      font-size: clamp(0.95rem, 2vw, 1.25rem);
-      color: var(--c70); line-height: 1.7; margin: 14px auto 0;
+      font-family: var(--font); font-weight: 300;
+      font-size: clamp(0.85rem, 3.4vw, 1.4rem); white-space: nowrap;
+      color: var(--cream); line-height: 1.7; margin: 14px auto 0; letter-spacing: 0.03em;
     }
     .hero-meta {
       font-family: var(--font); font-weight: 300;
       font-size: 0.6rem; letter-spacing: 0.42em; text-transform: lowercase; color: var(--c40);
     }
+    .hero-meta { font-size: clamp(0.66rem, 0.95vw, 0.82rem) !important; color: var(--c70) !important; letter-spacing: 0.34em !important; }
     .hero-meta span { color: var(--rose); opacity: 0.7; }
 
     .hero-foot { position: absolute; bottom: 30px; left: 0; right: 0; text-align: center; z-index: 1; }
@@ -205,6 +208,7 @@
       display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 88px);
       align-items: center; max-width: 1100px; margin: 0 auto; padding: 100px 24px;
     }
+    .split.solo { display: block; max-width: 760px; }
     .split.flip .split-text { order: 2; }
     .plate { position: relative; overflow: hidden; aspect-ratio: 4 / 5; }
     .plate img { position: absolute; top: 0; left: 0; filter: brightness(0.78) saturate(0.9); }
@@ -470,7 +474,7 @@
       <h1>
         <img class="hero-title" src="title.png" alt="in another life, tonight" width="1400" height="748">
       </h1>
-      <p class="hero-tagline">some goodbyes don't exist.<br>so you build them.</p>
+      <p class="hero-tagline">some goodbyes don't exist. so you build them.</p>
     </div>
 
     <p class="hero-meta hero-foot">Short Film &nbsp;<span>·</span>&nbsp; 2026 &nbsp;<span>·</span>&nbsp; a sunset III film</p>
@@ -486,7 +490,7 @@
     </div>
   </figure>
 
-  <section class="split reveal">
+  <section class="split solo reveal">
     <div class="split-text">
       <p class="section-label">The Film</p>
       <p class="logline">Over one dinner, a man's carefree night out with a friend collides with the ex he never got to say goodbye to — pulling him back into the night that started it all.</p>
@@ -494,11 +498,6 @@
         <p>Milo is out to dinner with his friend Ray, sharing plates and toasting to a weekend with no filters. Then Lex walks in, hand in hand with someone new.</p>
         <p>Lex is the man Milo was only beginning to fall for, until a fear, a possible move, and a goodbye that never came ended it. Milo retreats, but the restaurant where they had their first date won't let him go. The light, the music, and the memory of that night begin to blur into the present.</p>
         <p>A man who has been running from what he feels comes face to face with everything they never said.</p>
-      </div>
-    </div>
-    <div>
-      <div class="plate" style="--pos: 62% center">
-        <img data-speed="0.1" src="stills/09-lex-tiramisu.jpg" alt="Lex looking down at a plate of tiramisu" loading="lazy">
       </div>
     </div>
   </section>
@@ -596,8 +595,8 @@
 
 
   <!-- ══ III · THE GOODBYE (director) ══ -->
-  <figure class="bleed" style="--pos: center 35%">
-    <img data-speed="0.12" src="stills/16-face-to-face.jpg" alt="Milo and Lex laughing, face to face" loading="lazy">
+  <figure class="bleed" style="--pos: center 40%">
+    <img data-speed="0.12" src="stills/18-hug.jpg" alt="Two men embracing, one's face turned into the other's shoulder" loading="lazy">
     <div class="over reveal">
       <p class="chapter">iii</p>
       <p class="chapter-title">the goodbye</p>
@@ -608,8 +607,8 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 62% center">
-          <img data-speed="0.1" src="stills/18-hug.jpg" alt="Two men embracing, one's face turned into the other's shoulder" loading="lazy">
+        <div class="plate" style="--pos: 36% center">
+          <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
       <div>
