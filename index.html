@@ -511,12 +511,13 @@
     /* tall screens (phones, tablets held upright): keep the frames filling the screen, but shift each one
        so both people stay in view, with the words centered over the picture like on desktop */
     @media (max-width: 760px), (max-aspect-ratio: 1/1) {
-      .hero { padding-bottom: 24svh; }
-      .hero-bg, .hero-ghost {
-        top: 12%; left: -20%; width: 126%; height: auto;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
-                mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
+      /* tall screens: the photo fills the screen, zoomed in on the two faces turned toward each other, no fades */
+      .hero-ghost, .hero-overlay { display: none; }
+      .hero-bg {
+        top: 0; left: 0; width: 100%; height: 100%; max-width: none;
+        object-position: 59% 30%; -webkit-mask-image: none; mask-image: none; filter: none;
       }
+      .hero-title, .hero-tagline, .hero-by, .hero-foot { text-shadow: 0 1px 16px rgba(0,0,0,0.65); }
       .bleed.fit { height: auto; aspect-ratio: 5 / 4; margin-top: 0 !important; }
       .bleed.fit img { position: absolute; inset: 0; width: 100%; height: 100%; transform: none !important; object-fit: cover; object-position: 46% center; filter: brightness(0.8) saturate(0.92); }
       .bleed.fit::after { display: block; background: radial-gradient(ellipse 70% 45% at 50% 50%, rgba(13,9,12,0.5) 0%, transparent 100%); }
