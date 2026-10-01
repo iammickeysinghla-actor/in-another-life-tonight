@@ -31,7 +31,7 @@
       --c18:      rgba(240,234,226,0.18);
     }
 
-    html { scroll-behavior: smooth; overflow-x: hidden; }
+    html { scroll-behavior: smooth; overflow-x: clip; }
 
     body {
       /* Palette pulled from the film — plum-black night, neon rose from the title, amber only in the stills
@@ -48,7 +48,7 @@
       color: var(--cream);
       font-family: var(--font);
       font-weight: 300;
-      overflow-x: hidden;
+      overflow-x: clip;
       width: 100%;
       -webkit-font-smoothing: antialiased;
     }
@@ -337,36 +337,42 @@
     /* ══════════════════════════════
        STILLS
     ══════════════════════════════ */
-    .stills-section { padding: 90px 0 70px; }
-    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 40px; }
-    .reel-head {
-      display: flex; justify-content: space-between; align-items: center;
-      max-width: 1100px; margin: 0 auto 22px; padding: 0 24px;
-      font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.34em; color: var(--c40); text-transform: lowercase;
+    .stills-section { padding: 90px 0 0; }
+    .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 28px; }
+    .memory { position: relative; height: calc(16 * 52vh + 100vh); }
+    .memory-stage {
+      position: sticky; top: 0; height: 100svh; overflow: hidden; cursor: zoom-in;
+      --mx: 50%; --my: 50%; --r: 270px; touch-action: pan-y;
     }
-    .reel-head button { background: none; border: 0; cursor: pointer; font: inherit; letter-spacing: 0.34em; color: var(--c70); padding: 6px 4px; transition: color 0.3s; }
-    .reel-head button:hover { color: var(--rose); }
-    .reel-count b { font-weight: 300; color: var(--rose); }
-    .reel {
-      display: flex; gap: 14px; align-items: center;
-      overflow-x: auto; scroll-snap-type: x proximity; scrollbar-width: none;
-      padding: 0 max(24px, calc((100vw - 1100px) / 2)) 8px;
-      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
-              mask-image: linear-gradient(to right, transparent 0, #000 6%, #000 94%, transparent 100%);
+    .m-frame { position: absolute; inset: 0; opacity: 0; will-change: opacity, transform; }
+    .m-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); }
+    .m-blur { filter: blur(16px) brightness(0.5) saturate(0.8); transform: scale(1.1); }
+    .m-sharp {
+      filter: brightness(0.88) saturate(0.95);
+      -webkit-mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.9) 38%, transparent 100%);
+              mask-image: radial-gradient(circle var(--r) at var(--mx) var(--my), #000 0%, rgba(0,0,0,0.9) 38%, transparent 100%);
     }
-    .reel::-webkit-scrollbar { display: none; }
-    .still {
-      flex: 0 0 auto; height: clamp(240px, 52vh, 500px); aspect-ratio: 16 / 9;
-      scroll-snap-align: center; position: relative; padding: 0; border: 0; cursor: zoom-in; background: var(--bg);
+    @media (hover: none) { .m-blur { display: none; } .m-sharp { -webkit-mask-image: none; mask-image: none; filter: brightness(0.7) saturate(0.9); } .lens { display: none; } }
+    .memory-stage::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 40%, rgba(13,9,12,0.7) 100%),
+                  linear-gradient(to bottom, var(--bg) 0%, transparent 14%, transparent 86%, var(--bg) 100%);
     }
-    .still.tall { aspect-ratio: 4 / 5; }
-    .still img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); filter: brightness(0.62) saturate(0.82); transition: filter 0.8s ease; }
-    .reel:hover .still:not(:hover) img { filter: brightness(0.4) saturate(0.7); }
-    .still:hover img, .still:focus-visible img { filter: brightness(0.95) saturate(1); }
-    .still:focus-visible { outline: 1px solid var(--rose); outline-offset: 3px; }
-    .reel-bar { max-width: 1100px; margin: 22px auto 0; padding: 0 24px; }
-    .reel-bar div { height: 1px; background: var(--c18); position: relative; }
-    .reel-bar i { position: absolute; left: 0; top: 0; height: 1px; width: 10%; background: var(--rose); transition: width 0.2s; }
+    .lens {
+      position: absolute; left: 0; top: 0; width: 540px; height: 540px; border-radius: 50%; pointer-events: none; z-index: 2;
+      border: 1px solid rgba(212,155,203,0.2);
+      box-shadow: 0 0 80px rgba(212,155,203,0.07), inset 0 0 80px rgba(212,155,203,0.04);
+      transform: translate(calc(var(--mx) - 270px), calc(var(--my) - 270px));
+    }
+    .m-ui {
+      position: absolute; left: 0; right: 0; bottom: 36px; z-index: 3; pointer-events: none;
+      display: flex; justify-content: space-between; align-items: flex-end; padding: 0 clamp(20px, 4vw, 56px);
+      font-family: var(--font); font-weight: 300; text-transform: lowercase;
+    }
+    .m-count { font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--cream); letter-spacing: 0.06em; }
+    .m-count span { font-size: 0.6rem; letter-spacing: 0.34em; color: var(--c40); margin-left: 8px; }
+    .m-hint { font-size: 0.64rem; letter-spacing: 0.34em; color: var(--c70); transition: opacity 1s; }
+    .m-hint.gone { opacity: 0; }
 
     .lightbox {
       position: fixed; inset: 0; z-index: 9500; background: rgba(5,12,16,0.96);
@@ -532,7 +538,7 @@
     <div class="characters-grid">
 
       <div class="character-card" id="card-milo">
-        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 56% center">
+        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 40% center">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Our entire lens</p>
         <p class="character-name">Milo</p>
@@ -557,7 +563,7 @@
       </div>
 
       <div class="character-card" id="card-lex">
-        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 47% center">
+        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 53% center">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Presence and absence</p>
         <p class="character-name">Lex</p>
@@ -608,7 +614,7 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 33% center">
+        <div class="plate" style="--pos: 18% center">
           <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
@@ -629,32 +635,34 @@
   </section>
 
 
-  <!-- ══ STILLS ══ -->
-  <section class="stills-section reveal" id="stills">
+  <!-- ══ STILLS — a memory you pull into focus ══ -->
+  <section class="stills-section" id="stills">
     <p class="section-label">stills</p>
-    <div class="reel-head">
-      <span class="reel-count"><b id="reelNow">01</b> / 16</span>
-      <span><button id="reelPrev" aria-label="Previous">‹</button> &nbsp; <button id="reelNext" aria-label="Next">›</button></span>
+    <div class="memory" id="memory">
+      <div class="memory-stage" id="memStage">
+        <div class="m-frame" style="--pos:62% 25%"><img class="m-blur" src="stills/03-table-head-back.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/03-table-head-back.jpg" alt="milo at the table, head tipped back" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/07-lex-menu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/07-lex-menu.jpg" alt="lex over the menu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/06-milo-menu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/06-milo-menu.jpg" alt="milo over the menu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:60% center"><img class="m-blur" src="stills/09-lex-tiramisu.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/09-lex-tiramisu.jpg" alt="lex and the tiramisu" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/11-lex-arms.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/11-lex-arms.jpg" alt="lex, arms folded" loading="lazy"></div>
+        <div class="m-frame" style="--pos:55% 30%"><img class="m-blur" src="stills/10-milo-chin.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/10-milo-chin.jpg" alt="milo, chin in hand" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/12-milo-fork.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/12-milo-fork.jpg" alt="milo with a fork" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/04-milo-laugh.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/04-milo-laugh.jpg" alt="milo laughing" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/08-lex-listening.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/08-lex-listening.jpg" alt="lex listening" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/05-walk.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/05-walk.jpg" alt="walking home" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center"><img class="m-blur" src="stills/14-glass.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/14-glass.jpg" alt="through the glass" loading="lazy"></div>
+        <div class="m-frame" style="--pos:50% 30%"><img class="m-blur" src="stills/15-lex-smile.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/15-lex-smile.jpg" alt="lex smiling" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 35%"><img class="m-blur" src="stills/16-face-to-face.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 35%"><img class="m-blur" src="stills/17-close.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/17-close.jpg" alt="close" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 40%"><img class="m-blur" src="stills/13-embrace-silhouette.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/13-embrace-silhouette.jpg" alt="embrace in silhouette" loading="lazy"></div>
+        <div class="m-frame" style="--pos:center 40%"><img class="m-blur" src="stills/18-hug.jpg" alt="" loading="lazy"><img class="m-sharp" src="stills/18-hug.jpg" alt="an embrace" loading="lazy"></div>
+        <div class="lens" id="lens"></div>
+        <div class="m-ui">
+          <p class="m-count"><b id="mNow" style="font-weight:300">01</b><span>/ 16</span></p>
+          <p class="m-hint" id="mHint"></p>
+        </div>
+      </div>
     </div>
-    <div class="reel" id="reel">
-        <button class="still" style="--pos:center 40%"><img src="stills/13-embrace-silhouette.jpg" alt="embrace in silhouette" loading="lazy"></button>
-        <button class="still tall" style="--pos:62% 25%"><img src="stills/03-table-head-back.jpg" alt="milo at the table, head tipped back" loading="lazy"></button>
-        <button class="still tall" style="--pos:50% 30%"><img src="stills/06-milo-menu.jpg" alt="milo over the menu" loading="lazy"></button>
-        <button class="still" style="--pos:center"><img src="stills/05-walk.jpg" alt="walking home" loading="lazy"></button>
-        <button class="still tall" style="--pos:50% 30%"><img src="stills/08-lex-listening.jpg" alt="lex listening" loading="lazy"></button>
-        <button class="still" style="--pos:center"><img src="stills/14-glass.jpg" alt="through the glass" loading="lazy"></button>
-        <button class="still tall" style="--pos:55% 30%"><img src="stills/10-milo-chin.jpg" alt="milo, chin in hand" loading="lazy"></button>
-        <button class="still" style="--pos:center"><img src="stills/11-lex-arms.jpg" alt="lex, arms folded" loading="lazy"></button>
-        <button class="still" style="--pos:center 35%"><img src="stills/16-face-to-face.jpg" alt="face to face" loading="lazy"></button>
-        <button class="still tall" style="--pos:50% 30%"><img src="stills/04-milo-laugh.jpg" alt="milo laughing" loading="lazy"></button>
-        <button class="still" style="--pos:60% center"><img src="stills/09-lex-tiramisu.jpg" alt="lex and the tiramisu" loading="lazy"></button>
-        <button class="still" style="--pos:center 40%"><img src="stills/18-hug.jpg" alt="an embrace" loading="lazy"></button>
-        <button class="still tall" style="--pos:50% 30%"><img src="stills/15-lex-smile.jpg" alt="lex smiling" loading="lazy"></button>
-        <button class="still" style="--pos:center"><img src="stills/12-milo-fork.jpg" alt="milo with a fork" loading="lazy"></button>
-        <button class="still tall" style="--pos:50% 30%"><img src="stills/07-lex-menu.jpg" alt="lex over the menu" loading="lazy"></button>
-        <button class="still" style="--pos:center 35%"><img src="stills/17-close.jpg" alt="close" loading="lazy"></button>
-    </div>
-    <div class="reel-bar"><div><i id="reelBar"></i></div></div>
   </section>
 
 
@@ -765,22 +773,46 @@
       parallax();
     }
 
-    // stills reel
-    const reel = document.getElementById('reel');
-    const frames = [...reel.children];
-    function reelUpdate() {
-      const max = reel.scrollWidth - reel.clientWidth;
-      document.getElementById('reelBar').style.width = (10 + 90 * (max ? reel.scrollLeft / max : 0)) + '%';
-      const mid = reel.scrollLeft + reel.clientWidth / 2;
-      let n = 0, best = 1e9;
-      frames.forEach((f, i) => { const d = Math.abs(f.offsetLeft + f.offsetWidth / 2 - mid); if (d < best) { best = d; n = i; } });
-      document.getElementById('reelNow').textContent = String(n + 1).padStart(2, '0');
+    // stills — memory dissolve + focus-pull lens
+    const mem = document.getElementById('memory'), stage = document.getElementById('memStage');
+    const mFrames = [...stage.querySelectorAll('.m-frame')], N = mFrames.length;
+    const canHover = matchMedia('(hover: hover)').matches;
+    const hint = document.getElementById('mHint');
+    hint.textContent = canHover ? 'move to bring it into focus' : 'keep scrolling';
+    let curFrame = 0;
+    function memScroll() {
+      const r = mem.getBoundingClientRect();
+      const total = mem.offsetHeight - innerHeight;
+      const p = Math.min(1, Math.max(0, -r.top / total)) * (N - 1);
+      mFrames.forEach((f, i) => {
+        const o = Math.min(1, Math.max(0, (1 - Math.abs(p - i)) * 1.8));
+        f.style.opacity = o;
+        f.style.transform = 'scale(' + (1 + (1 - o) * 0.05 + (p - i) * 0.008).toFixed(4) + ')';
+      });
+      curFrame = Math.round(p);
+      document.getElementById('mNow').textContent = String(curFrame + 1).padStart(2, '0');
     }
-    reel.addEventListener('scroll', reelUpdate, { passive: true });
-    const step = () => Math.max(300, reel.clientWidth * 0.6);
-    document.getElementById('reelPrev').onclick = () => reel.scrollBy({ left: -step(), behavior: 'smooth' });
-    document.getElementById('reelNext').onclick = () => reel.scrollBy({ left: step(), behavior: 'smooth' });
-    reelUpdate();
+    addEventListener('scroll', memScroll, { passive: true }); addEventListener('resize', memScroll); memScroll();
+
+    let tx = 0.5, ty = 0.5, cx = 0.5, cy = 0.5, touched = false, t0 = performance.now();
+    stage.addEventListener('pointermove', e => {
+      if (e.pointerType === 'touch') return;
+      const b = stage.getBoundingClientRect();
+      tx = (e.clientX - b.left) / b.width; ty = (e.clientY - b.top) / b.height;
+      if (!touched) { touched = true; hint.classList.add('gone'); }
+    });
+    function lens(now) {
+      if (canHover && stage.getBoundingClientRect().bottom > 0 && stage.getBoundingClientRect().top < innerHeight) {
+        if (!touched) { const s = (now - t0) / 1000; tx = 0.5 + 0.22 * Math.sin(s * 0.5); ty = 0.5 + 0.18 * Math.sin(s * 0.8); }
+        cx += (tx - cx) * 0.08; cy += (ty - cy) * 0.08;
+        stage.style.setProperty('--mx', (cx * 100).toFixed(2) + '%');
+        stage.style.setProperty('--my', (cy * 100).toFixed(2) + '%');
+        const b = stage.getBoundingClientRect();
+        document.getElementById('lens').style.transform = 'translate(' + (cx * b.width - 270).toFixed(1) + 'px,' + (cy * b.height - 270).toFixed(1) + 'px)';
+      }
+      requestAnimationFrame(lens);
+    }
+    if (!reduce) requestAnimationFrame(lens);
 
     // email signup
     document.getElementById('signupForm').addEventListener('submit', function(e) {
@@ -804,7 +836,7 @@
     function closeCard(id) { document.getElementById(id).classList.remove('open'); }
 
     // lightbox
-    const stills = [...document.querySelectorAll('.still img')];
+    const stills = mFrames.map(f => f.querySelector('.m-sharp'));
     const lb = document.getElementById('lightbox'), lbImg = document.getElementById('lbImg');
     let cur = 0;
     function show(i) {
@@ -813,7 +845,7 @@
     }
     function open(i) { show(i); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
     function close() { lb.classList.remove('on'); document.body.style.overflow = ''; }
-    stills.forEach((img, i) => img.parentElement.addEventListener('click', () => open(i)));
+    stage.addEventListener('click', () => open(curFrame));
     lb.querySelector('.lb-close').onclick = close;
     lb.querySelector('.lb-prev').onclick = () => show(cur - 1);
     lb.querySelector('.lb-next').onclick = () => show(cur + 1);
