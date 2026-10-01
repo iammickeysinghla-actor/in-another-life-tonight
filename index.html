@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>in another life, TONIGHT — a short film</title>
+  <title>in another life, TONIGHT | a short film</title>
   <meta name="description" content="some goodbyes don't exist. so you build them. A short film by Mickey Singh. 2026.">
-  <meta property="og:title" content="in another life, TONIGHT — a short film">
+  <meta property="og:title" content="in another life, TONIGHT | a short film">
   <meta property="og:description" content="some goodbyes don't exist. so you build them.">
   <meta property="og:image" content="https://inanotherlifetonight.com/poster.jpg">
   <meta property="og:type" content="website">
@@ -230,6 +230,8 @@
       line-height: 1.4; color: var(--cream); max-width: 760px; margin: 0 auto 24px;
       text-shadow: 0 2px 40px rgba(0,0,0,0.7);
     }
+    .q-attr::before, .statement-attr::before { content: ""; display: block; width: 28px; height: 1px; background: var(--rose-ln); margin: 0 auto 14px; }
+    .statement-attr::before { margin-left: 0; }
     .q-attr {
       font-family: var(--font); font-weight: 300;
       font-size: 0.62rem; letter-spacing: 0.35em; text-transform: lowercase; color: var(--rose);
@@ -475,6 +477,7 @@
        RESPONSIVE
     ══════════════════════════════ */
     @media (max-width: 760px) {
+      .hero-title { width: min(460px, 82vw); }
       .split, .director-grid { grid-template-columns: 1fr; }
       .split { padding: 64px 24px; }
       .split.flip .split-text { order: 0; }
@@ -518,14 +521,14 @@
     <img data-speed="0.12" src="stills/10-milo-chin.jpg" alt="Milo, chin in hand, smiling across a candlelit restaurant table" loading="lazy">
     <div class="over reveal">
       <p class="chapter">i</p>
-      <p class="chapter-title">the table</p>
+      <p class="chapter-title">that night</p>
     </div>
   </figure>
 
   <section class="split solo reveal">
     <div class="split-text">
       <p class="section-label">The Film</p>
-      <p class="logline">Over one dinner, a man's carefree night out with a friend collides with the ex he never got to say goodbye to — pulling him back into the night that started it all.</p>
+      <p class="logline">Over one dinner, a man's carefree night out with a friend collides with the ex he never got to say goodbye to, pulling him back into the night that started it all.</p>
       <div class="prose">
         <p>Milo is out to dinner with his friend Ray, sharing plates and toasting to a weekend with no filters. Then Lex walks in, hand in hand with someone new.</p>
         <p>Lex is the man Milo was only beginning to fall for, until a fear, a possible move, and a goodbye that never came ended it. Milo retreats, but the restaurant where they had their first date won't let him go. The light, the music, and the memory of that night begin to blur into the present.</p>
@@ -541,7 +544,7 @@
     <div class="characters-grid">
 
       <div class="character-card" id="card-milo">
-        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 40% center">
+        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 40% 60%">
         <span class="character-tap-hint">learn more</span>
         <p class="character-role">Our entire lens</p>
         <p class="character-name">Milo</p>
@@ -566,7 +569,7 @@
         <div class="character-detail">
           <div class="char-divider"></div>
           <div class="char-row">
-            <p class="char-row-text">Charming, but guarded. He lets you in a little at a time — a joke here, a small admission there — but never all the way.</p>
+            <p class="char-row-text">Charming, but guarded. He lets you in a little at a time, a joke here, a small admission there, but never all the way.</p>
           </div>
           <span class="char-close" onclick="closeCard('card-lex')">close</span>
         </div>
@@ -581,7 +584,7 @@
     <img data-speed="0.12" src="stills/14-glass.jpg" alt="Lex and Milo seen through glass and reflection" loading="lazy">
     <div class="over reveal">
       <blockquote>"I just wish you'd let me say goodbye."</blockquote>
-      <p class="q-attr">— Milo</p>
+      <p class="q-attr">milo</p>
     </div>
   </figure>
 
@@ -613,7 +616,7 @@
           <p>I wanted it to feel like the way you actually remember things. You walk into a place and suddenly you're somewhere else. One song, one look, and you're back in that night. I'm usually more interested in how a moment feels than in what happens in it.</p>
           <p>This is my first time directing, so I kept it simple. One restaurant, a few people, and a night that never really ended for one of them.</p>
         </div>
-        <p class="statement-attr">— Mickey Singh, Writer / Director</p>
+        <p class="statement-attr">mickey singh, writer / director</p>
 
         <div class="bio">
           <p class="bio-name">About the director</p>
@@ -665,7 +668,7 @@
       <div><p class="credit-label">associate producers</p><p class="credit-name">shelley truong<br>charlie albalad</p></div>
       <div><p class="credit-label">creative supervisor</p><p class="credit-name">anthony tacheny</p></div>
       <div><p class="credit-label">1st assistant director</p><p class="credit-name">shelley truong</p></div>
-      <div><p class="credit-label">director of photography</p><p class="credit-name">sydney kaplan</p></div>
+      <div><p class="credit-label">director of photography &amp; colorist</p><p class="credit-name">sydney kaplan</p></div>
       <div><p class="credit-label">1st ac</p><p class="credit-name">christine mouton</p></div>
       <div><p class="credit-label">2nd ac</p><p class="credit-name">matt gonzalez</p></div>
       <div><p class="credit-label">gaffer</p><p class="credit-name">eden moshe</p></div>
@@ -693,7 +696,7 @@
   <section class="closing">
     <img class="closing-bg" data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="" loading="lazy">
 
-    <img class="poster reveal" src="poster.jpg" alt="Poster: in another life, tonight — starring Christopher Bencomo and Mickey Singh" loading="lazy">
+    <img class="poster reveal" src="poster.jpg" alt="Poster: in another life, tonight, starring Christopher Bencomo and Mickey Singh" loading="lazy">
 
     <div class="reveal">
       <h2 class="contact-heading">Stay close.</h2>
@@ -806,7 +809,7 @@
       e.preventDefault();
       const email = this.querySelector('input[type="email"]').value;
       window.location.href = 'mailto:iammickeysingh.la@gmail.com'
-        + '?subject=Notify%20me%20%E2%80%94%20In%20Another%20Life%2C%20Tonight'
+        + '?subject=Notify%20me%3A%20In%20Another%20Life%2C%20Tonight'
         + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
       this.style.display = 'none';
       document.getElementById('formDone').style.display = 'block';
