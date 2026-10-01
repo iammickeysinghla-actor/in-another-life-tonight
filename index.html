@@ -12,16 +12,19 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@100;200;300;400&display=swap" rel="stylesheet">
+  <!-- Owners Light (Adobe Fonts): paste the web-project stylesheet here, e.g.
+  <link rel="stylesheet" href="https://use.typekit.net/XXXXXXX.css"> -->
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@300&display=swap" rel="stylesheet">
 
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
+      --font:     'owners', 'Jost', sans-serif;
       --bg:       #0D090C;
-      --rose:     #C98ABF;
-      --rose-dim: rgba(201,138,191,0.18);
-      --rose-ln:  rgba(201,138,191,0.22);
+      --rose:     #D49BCB;
+      --rose-dim: rgba(212,155,203,0.18);
+      --rose-ln:  rgba(212,155,203,0.22);
       --cream:    #F0EAE2;
       --c70:      rgba(240,234,226,0.7);
       --c40:      rgba(240,234,226,0.4);
@@ -36,14 +39,14 @@
       background-color: var(--bg);
       background-image:
         radial-gradient(ellipse 100% 55% at -5%  8%,  rgba(78,30,66,0.55)   0%, transparent 58%),
-        radial-gradient(ellipse  70% 45% at 108%  4%, rgba(201,138,191,0.14) 0%, transparent 55%),
+        radial-gradient(ellipse  70% 45% at 108%  4%, rgba(212,155,203,0.14) 0%, transparent 55%),
         radial-gradient(ellipse  80% 40% at   2% 58%, rgba(60,24,52,0.45)   0%, transparent 58%),
         radial-gradient(ellipse  30% 18% at  75% 38%, rgba(150,96,36,0.18)  0%, transparent 50%),
         radial-gradient(ellipse  65% 44% at 105% 90%, rgba(70,28,60,0.45)   0%, transparent 55%),
-        radial-gradient(ellipse  58% 30% at  50% 100%, rgba(201,138,191,0.18) 0%, transparent 52%);
+        radial-gradient(ellipse  58% 30% at  50% 100%, rgba(212,155,203,0.18) 0%, transparent 52%);
       background-attachment: scroll;
       color: var(--cream);
-      font-family: 'Jost', sans-serif;
+      font-family: var(--font);
       font-weight: 300;
       overflow-x: hidden;
       width: 100%;
@@ -60,6 +63,8 @@
       mix-blend-mode: screen;
     }
 
+    em { font-style: normal; color: var(--rose); }
+    body { font-synthesis: none; }
     img { display: block; max-width: 100%; }
     .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
@@ -67,9 +72,9 @@
        SHARED
     ══════════════════════════════ */
     .section-label {
-      font-family: 'Jost', sans-serif; font-weight: 200;
+      font-family: var(--font); font-weight: 300;
       font-size: 0.58rem; letter-spacing: 0.45em;
-      text-transform: uppercase; color: var(--rose);
+      text-transform: lowercase; color: var(--rose);
       margin-bottom: 40px;
       display: flex; align-items: center; gap: 18px;
     }
@@ -79,13 +84,13 @@
     }
 
     .prose {
-      font-family: 'Cormorant Garamond', serif; font-weight: 400;
-      font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+      font-family: var(--font); font-weight: 300;
+      font-size: clamp(1rem, 1.5vw, 1.12rem);
       line-height: 1.85; color: var(--c70);
     }
     .logline {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
-      font-size: clamp(1.4rem, 2.8vw, 1.9rem); line-height: 1.5; color: var(--cream); margin-bottom: 36px;
+      font-family: var(--font); font-style: normal; font-weight: 300;
+      font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.5; color: var(--cream); margin-bottom: 36px;
     }
     .prose p + p { margin-top: 1.4em; }
 
@@ -116,14 +121,14 @@
 
     .chapter {
       display: flex; align-items: center; justify-content: center; gap: 16px;
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.58rem; letter-spacing: 0.5em; text-transform: uppercase;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.58rem; letter-spacing: 0.5em; text-transform: lowercase;
       color: var(--rose); opacity: 0.85;
     }
     .chapter::before, .chapter::after { content: ''; width: 36px; height: 1px; background: var(--rose-ln); }
     .chapter-title {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
-      font-size: clamp(2.2rem, 6vw, 4.6rem); line-height: 1.1;
+      font-family: var(--font); font-weight: 300; font-style: normal;
+      font-size: clamp(2rem, 5vw, 3.8rem); line-height: 1.1;
       color: var(--cream); margin-top: 22px;
       text-shadow: 0 2px 40px rgba(0,0,0,0.6);
     }
@@ -139,8 +144,9 @@
       padding: 64px 24px 84px;
     }
     .hero-bg {
-      position: absolute; top: 0; left: 0; height: 100%;
-      --pos: center 30%;
+      position: absolute; top: 0; left: -22.8%; width: 125%; max-width: none; height: 100%;
+      --pos: 62% 30%;
+      transform-origin: 58% 40%;
       filter: brightness(0.82) saturate(0.95);
       animation: slowZoom 28s ease-in-out infinite alternate;
     }
@@ -159,20 +165,20 @@
     @keyframes riseIn { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 
     .prod-label, .hero-by {
-      font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.6rem;
+      font-family: var(--font); font-weight: 300; font-size: 0.6rem;
       letter-spacing: 0.32em; text-transform: lowercase; color: var(--c70);
     }
     .hero-by { position: absolute; top: 32px; left: 0; right: 0; text-align: center; z-index: 1; }
     .hero-by b { font-weight: 300; color: var(--rose); }
     .hero-title { width: min(460px, 72vw); height: auto; margin: 0 auto; }
     .hero-tagline {
-      font-family: 'Cormorant Garamond', serif; font-style: italic;
+      font-family: var(--font); font-style: normal;
       font-size: clamp(0.95rem, 2vw, 1.25rem);
       color: var(--c70); line-height: 1.7; margin: 14px auto 0;
     }
     .hero-meta {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.6rem; letter-spacing: 0.42em; text-transform: uppercase; color: var(--c40);
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.6rem; letter-spacing: 0.42em; text-transform: lowercase; color: var(--c40);
     }
     .hero-meta span { color: var(--rose); opacity: 0.7; }
 
@@ -207,22 +213,22 @@
       box-shadow: inset 0 0 90px rgba(13,9,12,0.55);
     }
     .plate-cap {
-      margin-top: 14px; font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.52rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--c40);
+      margin-top: 14px; font-family: var(--font); font-weight: 300;
+      font-size: 0.52rem; letter-spacing: 0.4em; text-transform: lowercase; color: var(--c40);
     }
 
     /* ══════════════════════════════
        QUOTE (over a still)
     ══════════════════════════════ */
     blockquote {
-      font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 300;
-      font-size: clamp(1.6rem, 4.4vw, 3.2rem);
+      font-family: var(--font); font-style: normal; font-weight: 300;
+      font-size: clamp(1.4rem, 3.4vw, 2.6rem);
       line-height: 1.4; color: var(--cream); max-width: 760px; margin: 0 auto 24px;
       text-shadow: 0 2px 40px rgba(0,0,0,0.7);
     }
     .q-attr {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--rose);
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.62rem; letter-spacing: 0.35em; text-transform: lowercase; color: var(--rose);
     }
 
     /* ══════════════════════════════
@@ -252,26 +258,26 @@
     .character-card > *:not(.portrait) { position: relative; z-index: 1; }
 
     .character-role {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.54rem; letter-spacing: 0.45em; text-transform: uppercase;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.54rem; letter-spacing: 0.45em; text-transform: lowercase;
       color: var(--rose); opacity: 0.85; margin-bottom: 14px;
     }
     .character-name {
-      font-family: 'Cormorant Garamond', serif; font-weight: 300;
+      font-family: var(--font); font-weight: 300;
       font-size: clamp(2.6rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; margin-bottom: 10px;
     }
     .character-tagline {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--c70); text-transform: uppercase;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--c70); text-transform: lowercase;
     }
     .character-actor {
-      margin-top: 14px; font-family: 'Cormorant Garamond', serif; font-style: italic;
+      margin-top: 14px; font-family: var(--font); font-style: normal;
       font-size: 0.95rem; color: var(--c40);
     }
     .character-tap-hint {
       position: absolute; top: 24px; right: 24px; z-index: 1;
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.5rem; letter-spacing: 0.3em; text-transform: uppercase;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.5rem; letter-spacing: 0.3em; text-transform: lowercase;
       color: var(--c40); transition: opacity 0.4s;
     }
     .character-card.open .character-tap-hint { opacity: 0; }
@@ -285,18 +291,18 @@
     .char-divider { width: 32px; height: 1px; background: var(--rose-ln); margin: 28px 0; }
     .char-row { margin-bottom: 20px; }
     .char-row-label {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.5rem; letter-spacing: 0.4em; text-transform: uppercase;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.5rem; letter-spacing: 0.4em; text-transform: lowercase;
       color: var(--rose); opacity: 0.8; margin-bottom: 7px;
     }
     .char-row-text {
-      font-family: 'Cormorant Garamond', serif; font-weight: 400;
+      font-family: var(--font); font-weight: 300;
       font-size: clamp(0.9rem, 1.4vw, 1.02rem); color: var(--cream); opacity: 0.85; line-height: 1.65;
     }
     .char-close {
       margin-top: 18px; display: inline-block;
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.5rem; letter-spacing: 0.38em; text-transform: uppercase; color: var(--c40);
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.5rem; letter-spacing: 0.38em; text-transform: lowercase; color: var(--c40);
       cursor: pointer; border-bottom: 1px solid var(--c18); padding-bottom: 2px; transition: color 0.3s;
     }
     .char-close:hover { color: var(--rose); }
@@ -307,22 +313,22 @@
     .director { max-width: 1100px; margin: 0 auto; padding: 100px 24px; }
     .director-grid { display: grid; grid-template-columns: 5fr 6fr; gap: clamp(32px, 6vw, 88px); align-items: start; }
     .director .plate { aspect-ratio: 3 / 4; position: sticky; top: 40px; }
-    .statement { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.9; color: var(--c70); }
+    .statement { font-family: var(--font); font-size: clamp(1rem, 1.4vw, 1.08rem); line-height: 1.9; color: var(--c70); }
     .statement p + p { margin-top: 1.4em; }
     .statement-attr {
-      margin: 36px 0 44px; font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase; color: var(--rose);
+      margin: 36px 0 44px; font-family: var(--font); font-weight: 300;
+      font-size: 0.58rem; letter-spacing: 0.4em; text-transform: lowercase; color: var(--rose);
     }
     .bio {
       border-top: 1px solid var(--c18); padding-top: 32px;
-      font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.82rem;
+      font-family: var(--font); font-weight: 300; font-size: 0.82rem;
       line-height: 1.95; letter-spacing: 0.03em; color: var(--c40);
     }
     .bio-name {
-      font-weight: 200; font-size: 0.56rem; letter-spacing: 0.4em;
-      text-transform: uppercase; color: var(--rose); opacity: 0.85; margin-bottom: 14px;
+      font-weight: 300; font-size: 0.56rem; letter-spacing: 0.4em;
+      text-transform: lowercase; color: var(--rose); opacity: 0.85; margin-bottom: 14px;
     }
-    .bio em { font-family: 'Cormorant Garamond', serif; font-size: 1.05em; color: var(--c70); }
+    .bio em { font-family: var(--font); font-size: 1.05em; color: var(--c70); }
 
     /* ══════════════════════════════
        STILLS
@@ -349,8 +355,8 @@
     .lightbox img { max-height: 90vh; max-width: 92vw; object-fit: contain; }
     .lb-btn {
       position: absolute; background: none; border: 0; cursor: pointer;
-      font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.6rem;
-      letter-spacing: 0.35em; text-transform: uppercase; color: var(--c40); padding: 18px; transition: color 0.3s;
+      font-family: var(--font); font-weight: 300; font-size: 0.6rem;
+      letter-spacing: 0.35em; text-transform: lowercase; color: var(--c40); padding: 18px; transition: color 0.3s;
     }
     .lb-btn:hover { color: var(--rose); }
     .lb-close { top: 8px; right: 8px; }
@@ -363,11 +369,11 @@
     .credits-section { padding: 100px 24px 90px; max-width: 900px; margin: 0 auto; }
     .credits-top { display: grid; grid-template-columns: 1fr 1fr; gap: 44px 52px; margin: 8px 0 56px; text-align: center; }
     .credit-label {
-      font-family: 'Jost', sans-serif; font-weight: 200;
-      font-size: 0.56rem; letter-spacing: 0.4em; text-transform: uppercase;
-      color: var(--rose); opacity: 0.75; margin-bottom: 9px;
+      font-family: var(--font); font-weight: 300;
+      font-size: 0.62rem; letter-spacing: 0.3em; text-transform: lowercase;
+      color: var(--cream); opacity: 0.85; margin-bottom: 9px;
     }
-    .credit-name { font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 1.05rem; color: var(--cream); line-height: 1.4; }
+    .credit-name { font-family: var(--font); font-weight: 300; font-size: 1.05rem; color: var(--rose); line-height: 1.4; letter-spacing: 0.04em; }
     .credit-name.lead { font-weight: 300; font-size: clamp(1.6rem, 3.4vw, 2.3rem); }
     .credits-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px 32px;
@@ -387,27 +393,27 @@
     .closing > *:not(.closing-bg) { position: relative; z-index: 2; }
     .poster { width: min(320px, 70vw); margin: 0 auto 72px; box-shadow: 0 30px 90px rgba(0,0,0,0.6); }
 
-    .contact-heading { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(1.8rem, 4.5vw, 2.8rem); color: var(--cream); margin-bottom: 12px; }
-    .contact-sub { font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--c70); margin-bottom: 48px; }
+    .contact-heading { font-family: var(--font); font-weight: 300; font-size: clamp(1.6rem, 3.6vw, 2.4rem); color: var(--cream); margin-bottom: 12px; }
+    .contact-sub { font-family: var(--font); font-weight: 300; font-size: 0.7rem; letter-spacing: 0.18em; color: var(--c70); margin-bottom: 48px; }
     .email-form { display: flex; max-width: 380px; margin: 0 auto 36px; border: 1px solid var(--rose-ln); background: rgba(13,9,12,0.5); transition: border-color 0.3s; }
-    .email-form:focus-within { border-color: rgba(201,138,191,0.45); }
+    .email-form:focus-within { border-color: rgba(212,155,203,0.45); }
     .email-form input {
       flex: 1; background: transparent; border: none; outline: none; padding: 13px 18px;
-      font-family: 'Jost', sans-serif; font-weight: 300; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--cream);
+      font-family: var(--font); font-weight: 300; font-size: 0.8rem; letter-spacing: 0.04em; color: var(--cream);
     }
     .email-form input::placeholder { color: var(--c40); }
     .email-form button {
       background: transparent; border: none; border-left: 1px solid var(--rose-ln); padding: 13px 18px;
-      font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.6rem; letter-spacing: 0.35em;
-      text-transform: uppercase; color: var(--rose); cursor: pointer; transition: background 0.3s; white-space: nowrap;
+      font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.35em;
+      text-transform: lowercase; color: var(--rose); cursor: pointer; transition: background 0.3s; white-space: nowrap;
     }
     .email-form button:hover { background: var(--rose-dim); }
-    .form-done { display: none; font-family: 'Cormorant Garamond', serif; color: var(--rose); margin-bottom: 36px; }
+    .form-done { display: none; font-family: var(--font); color: var(--rose); margin-bottom: 36px; }
     .or-row { display: flex; align-items: center; gap: 14px; max-width: 260px; margin: 0 auto 32px; }
     .or-row::before, .or-row::after { content: ''; flex: 1; height: 1px; background: var(--c18); }
-    .or-row span { font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--c40); }
+    .or-row span { font-family: var(--font); font-weight: 300; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: lowercase; color: var(--c40); }
     .email-link {
-      display: inline-block; font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: 0.95rem;
+      display: inline-block; font-family: var(--font); font-weight: 300; font-size: 0.95rem;
       color: var(--c70); text-decoration: none; border-bottom: 1px solid var(--c18); padding-bottom: 2px;
       transition: color 0.3s, border-color 0.3s;
     }
@@ -417,7 +423,7 @@
       border-top: 1px solid var(--c18); padding: 32px 24px;
       display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
     }
-    footer p { font-family: 'Jost', sans-serif; font-weight: 200; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--c40); }
+    footer p { font-family: var(--font); font-weight: 300; font-size: 0.58rem; letter-spacing: 0.25em; text-transform: lowercase; color: var(--c40); }
 
     /* reveal */
     .reveal { opacity: 0; transform: translateY(20px); transition: opacity 1.2s ease, transform 1.2s ease; }
