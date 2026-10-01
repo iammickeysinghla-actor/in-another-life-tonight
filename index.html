@@ -491,7 +491,12 @@
     ══════════════════════════════ */
     @media (max-width: 760px) {
       .hero-title { width: min(460px, 82vw); }
-      .hero-bg, .hero-ghost { --pos: 66% 30%; }
+      /* phones are tall and narrow: scale the frame down so both of them fit, faded into the dark like the poster */
+      .hero-bg, .hero-ghost {
+        top: 13%; left: -46%; width: 154%; height: auto;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 26%, #000 66%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 26%, #000 66%, transparent 100%);
+      }
       .bleed.fit {
         height: clamp(340px, 64svh, 540px); display: flex; align-items: flex-start; padding-top: 14%; margin-top: 0 !important;
         -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 9%, #000 91%, transparent 100%);
