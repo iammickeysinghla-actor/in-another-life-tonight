@@ -143,20 +143,32 @@
       align-items: center; justify-content: flex-end;
       padding: 64px 24px 84px;
     }
-    .hero-bg {
+    .hero-bg, .hero-ghost {
       position: absolute; top: 3%; left: -22.8%; width: 125%; max-width: none; height: 100%;
-      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 14%); mask-image: linear-gradient(to bottom, transparent 0%, #000 14%);
       --pos: 62% 30%;
       transform-origin: 58% 30%;
-      filter: brightness(0.82) saturate(0.95);
+      -webkit-mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
+              mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
+    }
+    /* poster treatment: soft, lifted, dreamy */
+    .hero-bg {
+      filter: blur(1.2px) brightness(0.95) contrast(0.86) saturate(0.88) sepia(0.08);
       animation: slowZoom 28s ease-in-out infinite alternate;
     }
+    /* the echo: a blurred second take of the same frame, drifting slightly off register */
+    .hero-ghost {
+      filter: blur(26px) brightness(1.05) saturate(1.15);
+      opacity: 0.55; mix-blend-mode: screen;
+      animation: ghostDrift 22s ease-in-out infinite alternate;
+    }
+    @keyframes ghostDrift { from { transform: translateX(-2.2%) scale(1.04); } to { transform: translateX(2.2%) scale(1.09); } }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.05); } }
 
     .hero-overlay {
       position: absolute; inset: 0;
       background:
-        linear-gradient(to bottom, rgba(13,9,12,0.5) 0%, transparent 22%, transparent 42%, rgba(13,9,12,0.78) 68%, var(--bg) 100%);
+        radial-gradient(ellipse 70% 60% at 50% 42%, rgba(120,78,64,0.16) 0%, transparent 70%),
+        linear-gradient(to bottom, rgba(13,9,12,0.55) 0%, transparent 20%, transparent 46%, rgba(13,9,12,0.8) 72%, var(--bg) 100%);
     }
 
     .hero-inner {
@@ -469,7 +481,7 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero-bg { animation: none; }
+      .hero-bg, .hero-ghost { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
     }
@@ -501,6 +513,7 @@
 
   <!-- ══ HERO ══ -->
   <section class="hero">
+    <img class="hero-ghost" src="stills/19-hero.jpg" alt="" aria-hidden="true">
     <img class="hero-bg" src="stills/19-hero.jpg" alt="">
     <div class="hero-overlay"></div>
 
