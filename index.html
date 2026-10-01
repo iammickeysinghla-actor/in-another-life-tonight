@@ -339,7 +339,7 @@
     ══════════════════════════════ */
     .stills-section { padding: 90px 0 0; }
     .stills-section .section-label { padding: 0 24px; max-width: 1100px; margin: 0 auto 28px; }
-    .memory { position: relative; height: calc(16 * 60vh + 100vh); }
+    .memory { position: relative; height: calc(16 * 26vh + 100vh); }
     .memory-stage {
       position: sticky; top: 0; height: 100svh; overflow: hidden; cursor: zoom-in;
       --mx: 50%; --my: 50%; --r: 270px; touch-action: pan-y;
@@ -370,6 +370,9 @@
     }
     .m-count { font-size: clamp(1.6rem, 3vw, 2.4rem); color: var(--cream); letter-spacing: 0.06em; }
     .m-count span { font-size: 0.6rem; letter-spacing: 0.34em; color: var(--c40); margin-left: 8px; }
+    .m-right { display: flex; flex-direction: column; align-items: flex-end; gap: 14px; }
+    .m-skip { pointer-events: auto; font-size: 0.64rem; letter-spacing: 0.34em; color: var(--c70); text-decoration: none; border-bottom: 1px solid var(--c18); padding-bottom: 3px; transition: color 0.3s; }
+    .m-skip:hover { color: var(--rose); }
     .m-hint { font-size: 0.64rem; letter-spacing: 0.34em; color: var(--c70); transition: opacity 1s; }
     .m-hint.gone { opacity: 0; }
 
@@ -613,7 +616,7 @@
     <p class="section-label">Director's Statement</p>
     <div class="director-grid">
       <div>
-        <div class="plate" style="--pos: 27% center">
+        <div class="plate" style="--pos: 46% center">
           <img data-speed="0.1" src="stills/13-embrace-silhouette.jpg" alt="Two men embracing in silhouette" loading="lazy">
         </div>
       </div>
@@ -659,7 +662,7 @@
         <div class="lens" id="lens"></div>
         <div class="m-ui">
           <p class="m-count"><b id="mNow" style="font-weight:300">01</b><span>/ 16</span></p>
-          <p class="m-hint" id="mHint"></p>
+          <div class="m-right"><p class="m-hint" id="mHint"></p><a class="m-skip" href="#credits">skip to credits ↓</a></div>
         </div>
       </div>
     </div>
@@ -667,7 +670,7 @@
 
 
   <!-- ══ CREDITS ══ -->
-  <section class="credits-section reveal">
+  <section class="credits-section reveal" id="credits">
     <p class="section-label">cast &amp; crew</p>
 
     <div class="credits-top">
@@ -852,7 +855,7 @@
     }
     function open(i) { show(i); lb.classList.add('on'); document.body.style.overflow = 'hidden'; }
     function close() { lb.classList.remove('on'); document.body.style.overflow = ''; }
-    stage.addEventListener('click', () => open(curFrame));
+    stage.addEventListener('click', e => { if (e.target.closest('.m-skip')) return; open(curFrame); });
     lb.querySelector('.lb-close').onclick = close;
     lb.querySelector('.lb-prev').onclick = () => show(cur - 1);
     lb.querySelector('.lb-next').onclick = () => show(cur + 1);
