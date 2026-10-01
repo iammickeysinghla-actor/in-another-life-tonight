@@ -491,21 +491,6 @@
     ══════════════════════════════ */
     @media (max-width: 760px) {
       .hero-title { width: min(460px, 82vw); }
-      /* phones are tall and narrow: zoom out just enough that both faces are in frame, faded into the dark like the poster */
-      .hero-bg, .hero-ghost {
-        top: 12%; left: -25%; width: 130%; height: auto;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
-                mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
-      }
-      .bleed.fit {
-        height: auto; aspect-ratio: 5 / 4; margin-top: 0 !important;
-        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
-                mask-image: linear-gradient(to bottom, transparent 0%, #000 8%, #000 92%, transparent 100%);
-      }
-      .bleed.fit img { position: absolute; top: -9%; left: 0; width: 100%; height: 118%; object-fit: cover; object-position: center 40%; filter: brightness(0.8) saturate(0.92); }
-      .bleed.fit::after { background: linear-gradient(to top, rgba(13,9,12,0.8) 0%, rgba(13,9,12,0.15) 45%, transparent 70%); }
-      .bleed.fit .over { justify-content: flex-end; padding-bottom: 9%; }
-      .bleed.fit blockquote { font-size: clamp(1.25rem, 6vw, 1.7rem); margin-bottom: 14px; }
       .split, .director-grid { grid-template-columns: 1fr; }
       .split { padding: 64px 24px; }
       .split.flip .split-text { order: 0; }
@@ -521,6 +506,26 @@
       .email-form { flex-direction: column; }
       .email-form button { border-left: none; border-top: 1px solid var(--rose-ln); }
       footer { justify-content: center; text-align: center; }
+    }
+
+    /* tall screens (phones, tablets held upright): the 16:9 frames can't fill the screen without losing someone,
+       so show whole frames and pull the hero back until both faces are in */
+    @media (max-width: 760px), (max-aspect-ratio: 1/1) {
+      .hero-bg, .hero-ghost {
+        top: 12%; left: -25%; width: 130%; height: auto;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 24%, #000 68%, transparent 100%);
+      }
+      .bleed.fit {
+        height: auto; aspect-ratio: 16 / 9; margin-top: 0 !important;
+        -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
+                mask-image: linear-gradient(to bottom, transparent 0%, #000 6%, #000 94%, transparent 100%);
+      }
+      .bleed.fit img { position: absolute; inset: 0; width: 100%; height: 100%; transform: none !important; object-fit: cover; object-position: center; filter: brightness(0.85) saturate(0.92); }
+      .bleed.fit::after { display: block; background: linear-gradient(to top, rgba(13,9,12,0.82) 0%, rgba(13,9,12,0.2) 42%, transparent 68%); }
+      .bleed.fit .over { justify-content: flex-end; padding-bottom: 5%; }
+      .bleed.fit blockquote { font-size: clamp(1.05rem, 3.8vw, 1.9rem); margin-bottom: 10px; }
+      .bleed.fit .chapter-title { font-size: clamp(1.7rem, 6vw, 2.8rem); margin-top: 12px; }
     }
   </style>
 </head>
