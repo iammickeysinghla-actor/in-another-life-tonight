@@ -107,6 +107,9 @@
       filter: brightness(0.62) saturate(0.85);
       will-change: transform;
     }
+    /* the first still tucks under the hero so the two photographs dissolve into each other */
+    .hero { z-index: 2; }
+    .bleed.after-hero { margin-top: -16svh; }
     .bleed::after {
       content: ''; position: absolute; inset: 0; pointer-events: none;
       background: linear-gradient(to right, rgba(13,9,12,0.55) 0%, transparent 28%, transparent 72%, rgba(13,9,12,0.55) 100%);
@@ -147,8 +150,9 @@
       position: absolute; top: 3%; left: -22.8%; width: 125%; max-width: none; height: 100%;
       --pos: 62% 30%;
       transform-origin: 58% 30%;
-      -webkit-mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
-              mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%), linear-gradient(to bottom, #000 68%, transparent 93%);
+              mask-image: radial-gradient(ellipse 58% 68% at 58% 50%, #000 48%, transparent 100%), linear-gradient(to bottom, #000 68%, transparent 93%);
+      -webkit-mask-composite: source-in; mask-composite: intersect;
     }
     /* sharp frame, feathered into the dark */
     .hero-bg {
@@ -168,7 +172,7 @@
       position: absolute; inset: 0;
       background:
         radial-gradient(ellipse 70% 60% at 50% 42%, rgba(120,78,64,0.16) 0%, transparent 70%),
-        linear-gradient(to bottom, rgba(13,9,12,0.55) 0%, transparent 20%, transparent 46%, rgba(13,9,12,0.8) 72%, var(--bg) 100%);
+        linear-gradient(to bottom, rgba(13,9,12,0.55) 0%, transparent 20%, transparent 46%, rgba(13,9,12,0.7) 70%, transparent 100%);
     }
 
     .hero-inner {
@@ -511,6 +515,7 @@
     /* tall screens (phones, tablets held upright): keep the frames filling the screen, but shift each one
        so both people stay in view, with the words centered over the picture like on desktop */
     @media (max-width: 760px), (max-aspect-ratio: 1/1) {
+      .bleed.after-hero { margin-top: 0; }
       /* tall screens: the photo fills the screen, zoomed in on the two faces turned toward each other, no fades */
       .hero-ghost, .hero-overlay { display: none; }
       .hero-bg {
@@ -549,7 +554,7 @@
 
 
   <!-- ══ I · THE TABLE ══ -->
-  <figure class="bleed" style="--pos: center 30%">
+  <figure class="bleed after-hero" style="--pos: center 30%">
     <img data-speed="0.12" src="stills/10-milo-chin.jpg" alt="Milo, chin in hand, smiling across a candlelit restaurant table" loading="lazy">
     <div class="over reveal">
       <p class="chapter">i</p>
