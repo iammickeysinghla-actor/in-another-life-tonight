@@ -472,6 +472,8 @@
       text-transform: lowercase; color: var(--rose); cursor: pointer; transition: background 0.3s; white-space: nowrap;
     }
     .email-form button:hover { background: var(--rose-dim); }
+    .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+    .signup-note { font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: lowercase; color: var(--c40); margin: -22px 0 34px; }
     .form-done { display: none; font-family: var(--font); color: var(--rose); margin-bottom: 36px; }
     .or-row { display: flex; align-items: center; gap: 14px; max-width: 260px; margin: 0 auto 32px; }
     .or-row::before, .or-row::after { content: ''; flex: 1; height: 1px; background: var(--c18); }
@@ -751,9 +753,11 @@
       <p class="contact-sub">Screenings, festival dates &amp; updates.</p>
 
       <form class="email-form" id="signupForm">
-        <input type="email" placeholder="your@email.com" required>
+        <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+        <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
         <button type="submit">Notify me</button>
       </form>
+      <p class="signup-note" id="signupNote">we'll only email you about the film</p>
 
       <p class="form-done" id="formDone">You'll hear from us. &nbsp;✦</p>
 
@@ -853,14 +857,29 @@
     requestAnimationFrame(tick);
 
     // email signup
+    // signup: each email goes into a Google Sheet through an Apps Script web app
+    const SIGNUP_URL = 'https://script.google.com/macros/s/AKfycbzU9k6Y-WYZEfTmSrOi4Ka8oUbPRs-Gm9JElut8QLrkT0GM3uXCPh4wi3eSsZzyF4Oyyw/exec';
     document.getElementById('signupForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const email = this.querySelector('input[type="email"]').value;
-      window.location.href = 'mailto:iammickeysingh.la@gmail.com'
-        + '?subject=Notify%20me%3A%20In%20Another%20Life%2C%20Tonight'
-        + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
-      this.style.display = 'none';
-      document.getElementById('formDone').style.display = 'block';
+      const form = this, btn = form.querySelector('button');
+      const email = form.querySelector('input[type="email"]').value.trim();
+      const body = new URLSearchParams({ email: email, company: form.querySelector('.hp').value, page: location.href });
+      btn.disabled = true; btn.textContent = 'sending';
+      const done = () => {
+        form.style.display = 'none';
+        document.getElementById('signupNote').style.display = 'none';
+        document.getElementById('formDone').style.display = 'block';
+        if (window.gtag) gtag('event', 'sign_up', { method: 'notify_me' });
+      };
+      fetch(SIGNUP_URL, { method: 'POST', mode: 'no-cors', body: body })
+        .then(done)
+        .catch(() => {
+          // the Sheet couldn't be reached: fall back to an email so the signup isn't lost
+          window.location.href = 'mailto:iammickeysingh.la@gmail.com'
+            + '?subject=Notify%20me%3A%20In%20Another%20Life%2C%20Tonight'
+            + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
+          done();
+        });
     });
 
     // character cards
