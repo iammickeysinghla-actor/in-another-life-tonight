@@ -268,6 +268,15 @@
     .end-card.show { opacity: 1; visibility: visible; transition-delay: 0s; }
     .end-card .email-form { width: 100%; }
     .end-actions { display: flex; gap: 22px; margin-top: 6px; }
+    /* on landscape screens the button sits under the title, clear of the faces */
+    @media (min-width: 761px) and (min-aspect-ratio: 1/1) {
+      .hero { padding-bottom: 160px; }
+      .hero-foot { bottom: 28px; }
+      .play-ring { top: auto; bottom: 74px; flex-direction: row; gap: 16px; }
+      .play-ring .ring { width: 40px; box-shadow: 0 0 24px rgba(212,155,203,0.2), inset 0 0 14px rgba(212,155,203,0.12); }
+      .play-ring .ring::after { animation-duration: 4s; }
+      .play-label { letter-spacing: 0.3em; }
+    }
     .hero.playing .hero-player { opacity: 1; visibility: visible; transition: opacity 0.9s ease; }
     .hero.playing .hero-bg, .hero.playing .hero-overlay, .hero.playing .hero-loop { opacity: 0; transition: opacity 0.9s ease; }
     .hero.playing .hero-inner, .hero.playing .hero-by, .hero.playing .hero-foot, .hero.playing .play-ring {
@@ -354,81 +363,16 @@
     /* ══════════════════════════════
        CHARACTERS — portrait behind each card
     ══════════════════════════════ */
-    .characters-section { padding: 40px 24px 100px; max-width: 940px; margin: 0 auto; }
-
-    .characters-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-top: 8px; }
-
-    .character-card {
-      position: relative; overflow: hidden; cursor: pointer;
-      min-height: clamp(440px, 52vw, 600px);
-      display: flex; flex-direction: column; justify-content: flex-end;
-      padding: 36px 26px 34px; background: var(--bg);
-    }
-    .character-card .portrait { scale: var(--zoom, 1); transform-origin: var(--origin, center); }
-    .character-card .portrait {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      object-fit: cover; object-position: var(--pos, center);
-      filter: brightness(0.85) saturate(0.95);
-      transition: filter 0.8s ease, transform 1.4s ease;
-    }
-    .character-card:hover .portrait, .character-card.open .portrait { filter: brightness(0.45) saturate(0.85); transform: scale(1.04); }
-    .character-card::after {
-      content: ''; position: absolute; inset: 0; pointer-events: none;
-      background: linear-gradient(to bottom, transparent 30%, rgba(13,9,12,0.92) 100%);
-    }
-    .character-card > *:not(.portrait) { position: relative; z-index: 1; }
-
-    .character-role {
-      font-family: var(--font); font-weight: 300;
-      font-size: 0.54rem; letter-spacing: 0.45em; text-transform: lowercase;
-      color: var(--rose); opacity: 0.85; margin-bottom: 14px;
-    }
-    .character-name {
-      font-family: var(--font); font-weight: 300;
-      font-size: clamp(2.6rem, 5vw, 3.8rem); color: var(--cream); line-height: 1; margin-bottom: 10px;
-    }
-    .character-tagline {
-      font-family: var(--font); font-weight: 300;
-      font-size: 0.6rem; letter-spacing: 0.2em; color: var(--c70); text-transform: lowercase;
-    }
-    .character-actor {
-      margin-top: 12px; font-family: var(--font); font-weight: 300;
-      font-size: 0.6rem; letter-spacing: 0.2em; text-transform: lowercase; color: var(--c40);
-    }
-    .character-card > .character-tap-hint { position: absolute; top: 22px; right: 22px; white-space: nowrap; }
-    .character-tap-hint {
-      position: absolute; top: 24px; right: 24px; z-index: 1;
-      font-family: var(--font); font-weight: 300;
-      font-size: 0.5rem; letter-spacing: 0.3em; text-transform: lowercase;
-      color: var(--c40); transition: opacity 0.4s;
-    }
-    .character-card.open .character-tap-hint { opacity: 0; }
-
-    .character-detail {
-      max-height: 0; overflow: hidden; opacity: 0; pointer-events: none;
-      transition: max-height 0.6s ease, opacity 0.4s ease;
-    }
-    .character-card.open .character-detail { max-height: 640px; opacity: 1; pointer-events: auto; }
-
-    .char-divider { width: 32px; height: 1px; background: var(--rose-ln); margin: 28px 0; }
-    .char-row { margin-bottom: 20px; }
-    .char-row-label {
-      font-family: var(--font); font-weight: 300;
-      font-size: 0.5rem; letter-spacing: 0.4em; text-transform: lowercase;
-      color: var(--rose); opacity: 0.8; margin-bottom: 7px;
-    }
-    .char-row-text {
-      font-family: var(--font); font-weight: 300;
-      font-size: clamp(0.9rem, 1.4vw, 1.02rem); color: var(--cream); opacity: 0.85; line-height: 1.65;
-    }
-    .char-close {
-      margin-top: 18px; display: inline-block;
-      font-family: var(--font); font-weight: 300;
-      font-size: 0.5rem; letter-spacing: 0.38em; text-transform: lowercase; color: var(--c40);
-      cursor: pointer; border-bottom: 1px solid var(--c18); padding-bottom: 2px; transition: color 0.3s;
-    }
-    .char-close:hover { color: var(--rose); }
-
+    .cast-row { margin-top: 72px; padding-top: 40px; border-top: 1px solid var(--c18); }
+    .cast-row .section-label { margin-bottom: 30px; }
+    .cast-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 36px 32px; }
+    .cast-card { display: grid; grid-template-columns: 116px 1fr; gap: 20px; align-items: start; }
+    .cast-ph { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: var(--bg); }
+    .cast-ph img { width: 100%; height: 100%; object-fit: cover; object-position: var(--pos, center); scale: var(--zoom, 1); display: block; filter: brightness(0.95) saturate(0.95); }
+    .cast-name { font-family: var(--font); font-weight: 300; font-size: 1.7rem; color: var(--cream); line-height: 1.1; }
+    .cast-by { font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.22em; text-transform: lowercase; color: var(--rose); margin: 8px 0 12px; }
+    .cast-line { font-family: var(--font); font-weight: 300; font-size: 0.9rem; line-height: 1.7; color: var(--c70); }
+    @media (max-width: 760px) { .cast-cards { grid-template-columns: 1fr; } }
     /* ══════════════════════════════
        DIRECTOR
     ══════════════════════════════ */
@@ -549,6 +493,7 @@
     .song-head { grid-column: 2; grid-row: 1; align-self: start; padding-top: 2px; }
     .song-title { font-family: var(--font); font-weight: 300; font-size: clamp(1.7rem, 3.2vw, 2.4rem); color: var(--cream); line-height: 1.1; letter-spacing: 0.01em; }
     .song-by { font-family: var(--font); font-weight: 300; font-size: 0.68rem; letter-spacing: 0.26em; text-transform: lowercase; color: var(--rose); margin-top: 10px; }
+    .song-credit { font-family: var(--font); font-weight: 300; font-size: 0.64rem; letter-spacing: 0.2em; line-height: 1.9; text-transform: lowercase; color: var(--c40); margin-top: 12px; }
     .song-side { grid-column: 3; grid-row: 1; display: flex; flex-direction: column; align-items: flex-end; gap: 12px; }
     .song-pill { font-family: var(--font); font-weight: 300; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: lowercase; color: var(--cream); border: 1px solid rgba(212,155,203,0.5); padding: 7px 14px; border-radius: 999px; }
     .song-link { font-family: var(--font); font-weight: 300; font-size: 0.58rem; letter-spacing: 0.28em; text-transform: lowercase; color: var(--c40); text-decoration: none; border-bottom: 1px solid var(--c18); padding-bottom: 3px; transition: color 0.3s, border-color 0.3s; white-space: nowrap; }
@@ -641,7 +586,6 @@
       .split.flip .split-text { order: 0; }
       .plate { aspect-ratio: 4 / 3; }
       .director .plate { position: relative; top: 0; aspect-ratio: 4 / 3; }
-      .characters-grid { grid-template-columns: 1fr; }
       .bleed { height: clamp(320px, 70svh, 560px); }
       .stills-grid { grid-template-columns: 1fr 1fr; }
       .still, .still.wide { grid-column: span 1; }
@@ -690,9 +634,9 @@
       <p class="hero-tagline">some goodbyes find you</p>
     </div>
 
-    <button class="play-ring" id="playBtn" type="button" aria-label="Play the trailer, 1 minute 4 seconds">
+    <button class="play-ring" id="playBtn" type="button" aria-label="Play the official trailer, 1 minute 4 seconds">
       <span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>
-      <span class="play-label">watch the trailer <i>1:04</i></span>
+      <span class="play-label">watch the official trailer <i>1:04</i></span>
     </button>
 
     <div class="hero-player" id="heroPlayer" aria-hidden="true">
@@ -732,7 +676,8 @@
       <button class="song-play" id="songPlay" type="button" aria-label="Play the song, Snowdrop"><svg class="i-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg><svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg></button>
       <div class="song-head">
         <p class="song-title">snowdrop</p>
-        <p class="song-by">charlie albalad, strand hill</p>
+        <p class="song-by">original song from the film</p>
+        <p class="song-credit">written by charlie albalad &amp; strand hill<br>performed by charlie albalad</p>
       </div>
       <div class="song-side">
         <span class="song-pill">soundtrack</span>
@@ -755,45 +700,22 @@
         <p>Milo is out to dinner with his friend Ray, toasting to a weekend with no filters. Then Lex walks in, holding hands with someone new.</p>
         <p>Milo and Lex were just starting something, and it ended without a goodbye. This is the same restaurant where Milo brought him on the night that mattered most. As the night goes on, the past starts to mix with the present.</p>
       </div>
+      <div class="cast-row">
+        <p class="section-label">the two of them</p>
+        <div class="cast-cards">
+          <div class="cast-card">
+            <div class="cast-ph"><img src="stills/06-milo-menu.jpg" alt="Milo" loading="lazy" style="--pos: 40% 60%; --zoom: 1.14"></div>
+            <div><p class="cast-name">Milo</p><p class="cast-by">played by mickey singh</p><p class="cast-line">Thorough and intentional. Plans the perfect night out and quietly watches to see if it lands.</p></div>
+          </div>
+          <div class="cast-card">
+            <div class="cast-ph"><img src="stills/08-lex-listening.jpg" alt="Lex" loading="lazy" style="--pos: 61% center"></div>
+            <div><p class="cast-name">Lex</p><p class="cast-by">played by christopher bencomo</p><p class="cast-line">Charming, but guarded. He lets you in a little at a time, a joke here, a small admission there, but never all the way.</p></div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- characters -->
-  <section class="characters-section reveal">
-    <p class="section-label">the two of them</p>
-
-    <div class="characters-grid">
-
-      <div class="character-card" id="card-milo">
-        <img class="portrait" src="stills/06-milo-menu.jpg" alt="" loading="lazy" style="--pos: 40% 60%; --zoom: 1.14; --origin: 55% 38%">
-        <span class="character-tap-hint">learn more</span>
-        <p class="character-name">Milo</p>
-        <p class="character-actor">played by Mickey Singh</p>
-        <div class="character-detail">
-          <div class="char-divider"></div>
-          <div class="char-row">
-            <p class="char-row-text">Thorough and intentional. Plans the perfect night out and quietly watches to see if it lands.</p>
-          </div>
-          <span class="char-close" onclick="closeCard('card-milo')">close</span>
-        </div>
-      </div>
-
-      <div class="character-card" id="card-lex">
-        <img class="portrait" src="stills/08-lex-listening.jpg" alt="" loading="lazy" style="--pos: 61% center">
-        <span class="character-tap-hint">learn more</span>
-        <p class="character-name">Lex</p>
-        <p class="character-actor">played by Christopher Bencomo</p>
-        <div class="character-detail">
-          <div class="char-divider"></div>
-          <div class="char-row">
-            <p class="char-row-text">Charming, but guarded. He lets you in a little at a time, a joke here, a small admission there, but never all the way.</p>
-          </div>
-          <span class="char-close" onclick="closeCard('card-lex')">close</span>
-        </div>
-      </div>
-
-          </div>
-  </section>
 
 
   <!-- ══ II · THE WALK (quote) ══ -->
@@ -1196,16 +1118,6 @@
       addEventListener('resize', draw); draw(); label();
       window.songPause = () => { if (widget) widget.pause(); };
     })();
-
-    // character cards
-    document.querySelectorAll('.character-card').forEach(card => {
-      card.addEventListener('click', function(e) {
-        if (e.target.classList.contains('char-close')) return;
-        document.querySelectorAll('.character-card').forEach(c => { if (c !== this) c.classList.remove('open'); });
-        this.classList.toggle('open');
-      });
-    });
-    function closeCard(id) { document.getElementById(id).classList.remove('open'); }
 
     // lightbox
     const stills = mFrames.map(f => f.querySelector('.m-sharp'));
