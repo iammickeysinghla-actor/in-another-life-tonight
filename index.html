@@ -183,6 +183,61 @@
         linear-gradient(to bottom, rgba(13,9,12,0.4) 0%, transparent 18%, transparent 52%, rgba(13,9,12,0.5) 72%, transparent 100%);
     }
 
+    /* the trailer: a quiet ring between the two faces, and the hero itself turns into the player */
+    .play-ring {
+      position: absolute; left: 50%; top: 41%; translate: -50% -50%; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 18px;
+      background: none; border: 0; cursor: pointer; color: var(--cream);
+      opacity: 0; animation: riseIn 2.4s cubic-bezier(0.16,1,0.3,1) 0.9s forwards;
+    }
+    .play-ring .ring {
+      position: relative; width: clamp(64px, 6vw, 92px); aspect-ratio: 1; border-radius: 50%;
+      display: grid; place-items: center;
+      border: 1px solid rgba(212,155,203,0.7); background: rgba(13,9,12,0.28);
+      -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+      box-shadow: 0 0 40px rgba(212,155,203,0.18), inset 0 0 24px rgba(212,155,203,0.12);
+      transition: background 0.5s, box-shadow 0.5s, transform 0.5s;
+    }
+    .play-ring .ring::after {
+      content: ''; position: absolute; inset: -1px; border-radius: 50%; border: 1px solid rgba(212,155,203,0.5);
+      animation: ringPulse 3.4s ease-out infinite;
+    }
+    @keyframes ringPulse { 0% { transform: scale(1); opacity: 0.7; } 100% { transform: scale(1.7); opacity: 0; } }
+    .play-ring svg { width: 34%; fill: var(--rose); margin-left: 6%; transition: fill 0.4s; }
+    .play-ring:hover .ring, .play-ring:focus-visible .ring { background: rgba(212,155,203,0.9); box-shadow: 0 0 70px rgba(212,155,203,0.45); transform: scale(1.06); }
+    .play-ring:hover svg, .play-ring:focus-visible svg { fill: #1a0f18; }
+    .play-ring:focus-visible { outline: none; }
+    .play-label {
+      font-family: var(--font); font-weight: 300; text-transform: lowercase; letter-spacing: 0.34em;
+      font-size: clamp(0.66rem, 0.3rem + 0.6vw, 0.95rem); text-shadow: 0 1px 14px rgba(0,0,0,0.7);
+    }
+    .play-label i { font-style: normal; color: var(--rose); letter-spacing: 0.2em; margin-left: 0.8em; }
+
+    .hero-player {
+      position: absolute; inset: 0; z-index: 5; display: flex; align-items: center; justify-content: center;
+      background: #0D090C; opacity: 0; visibility: hidden; transition: opacity 0.9s ease, visibility 0s linear 0.9s;
+    }
+    .yt-box { width: min(100%, calc(100svh * 16 / 9)); aspect-ratio: 16 / 9; background: #000; box-shadow: 0 30px 120px rgba(0,0,0,0.7); }
+    .yt-box iframe { width: 100%; height: 100%; display: block; border: 0; }
+    .player-close, .end-actions button {
+      background: none; border: 0; cursor: pointer; font-family: var(--font); font-weight: 300; text-transform: lowercase;
+      font-size: 0.64rem; letter-spacing: 0.34em; color: var(--c70); padding: 10px 6px; transition: color 0.3s;
+    }
+    .player-close { position: absolute; top: 18px; right: 22px; z-index: 6; }
+    .player-close:hover, .end-actions button:hover { color: var(--rose); }
+    .end-card {
+      position: absolute; inset: 0; z-index: 7; display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center; padding: 24px; background: rgba(13,9,12,0.9); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+      opacity: 0; visibility: hidden; transition: opacity 0.9s ease 0.2s, visibility 0s linear 1.1s;
+    }
+    .end-card.show { opacity: 1; visibility: visible; transition-delay: 0s; }
+    .end-card .email-form { width: 100%; }
+    .end-actions { display: flex; gap: 22px; margin-top: 6px; }
+    .hero.playing .hero-player { opacity: 1; visibility: visible; transition: opacity 0.9s ease; }
+    .hero.playing .hero-bg, .hero.playing .hero-ghost, .hero.playing .hero-overlay { opacity: 0; transition: opacity 0.9s ease; }
+    .hero.playing .hero-inner, .hero.playing .hero-by, .hero.playing .hero-foot, .hero.playing .play-ring {
+      opacity: 0 !important; animation: none; pointer-events: none; transition: opacity 0.5s ease;
+    }
     .hero-inner {
       position: relative; z-index: 1; text-align: center;
       opacity: 0; animation: riseIn 2.4s cubic-bezier(0.16,1,0.3,1) 0.4s forwards;
@@ -561,6 +616,28 @@
       <p class="hero-tagline">some goodbyes find you</p>
     </div>
 
+    <button class="play-ring" id="playBtn" type="button" aria-label="Play the trailer, 1 minute 4 seconds">
+      <span class="ring"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>
+      <span class="play-label">watch the trailer <i>1:04</i></span>
+    </button>
+
+    <div class="hero-player" id="heroPlayer" aria-hidden="true">
+      <div class="yt-box"><div id="ytPlayer"></div></div>
+      <button class="player-close" id="playerClose" type="button">close</button>
+      <div class="end-card" id="endCard">
+        <h2 class="contact-heading">Stay close.</h2>
+        <p class="contact-sub">Screenings, festival dates &amp; updates.</p>
+        <form class="email-form" id="endForm">
+          <input type="email" name="email" placeholder="your@email.com" required autocomplete="email">
+          <input type="text" name="company" tabindex="-1" autocomplete="off" aria-hidden="true" class="hp">
+          <button type="submit">Notify me</button>
+        </form>
+        <p class="signup-note" id="endNote">we'll only email you about the film</p>
+        <p class="form-done" id="endDone">You'll hear from us. &nbsp;✦</p>
+        <div class="end-actions"><button type="button" id="watchAgain">watch again</button><button type="button" id="endClose">close</button></div>
+      </div>
+    </div>
+
     <p class="hero-meta hero-foot">Short Film &nbsp;<span>·</span>&nbsp; 2026 &nbsp;<span>·</span>&nbsp; a sunset <span class="keep">III</span> film</p>
   </section>
 
@@ -859,28 +936,86 @@
     // email signup
     // signup: each email goes into a Google Sheet through an Apps Script web app
     const SIGNUP_URL = 'https://script.google.com/macros/s/AKfycbzU9k6Y-WYZEfTmSrOi4Ka8oUbPRs-Gm9JElut8QLrkT0GM3uXCPh4wi3eSsZzyF4Oyyw/exec';
-    document.getElementById('signupForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const form = this, btn = form.querySelector('button');
-      const email = form.querySelector('input[type="email"]').value.trim();
-      const body = new URLSearchParams({ email: email, company: form.querySelector('.hp').value, page: location.href });
-      btn.disabled = true; btn.textContent = 'sending';
-      const done = () => {
-        form.style.display = 'none';
-        document.getElementById('signupNote').style.display = 'none';
-        document.getElementById('formDone').style.display = 'block';
-        if (window.gtag) gtag('event', 'sign_up', { method: 'notify_me' });
-      };
-      fetch(SIGNUP_URL, { method: 'POST', mode: 'no-cors', body: body })
-        .then(done)
-        .catch(() => {
-          // the Sheet couldn't be reached: fall back to an email so the signup isn't lost
-          window.location.href = 'mailto:iammickeysingh.la@gmail.com'
-            + '?subject=Notify%20me%3A%20In%20Another%20Life%2C%20Tonight'
-            + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
-          done();
-        });
-    });
+    function wireSignup(form, noteEl, doneEl, source) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = form.querySelector('button[type="submit"]');
+        const email = form.querySelector('input[type="email"]').value.trim();
+        const body = new URLSearchParams({ email: email, company: form.querySelector('.hp').value, page: location.origin + location.pathname + source });
+        btn.disabled = true; btn.textContent = 'sending';
+        const done = () => {
+          form.style.display = 'none'; noteEl.style.display = 'none'; doneEl.style.display = 'block';
+          if (window.gtag) gtag('event', 'sign_up', { method: source || 'notify_me' });
+        };
+        fetch(SIGNUP_URL, { method: 'POST', mode: 'no-cors', body: body })
+          .then(done)
+          .catch(() => {
+            // the Sheet couldn't be reached: fall back to an email so the signup isn't lost
+            window.location.href = 'mailto:iammickeysingh.la@gmail.com'
+              + '?subject=Notify%20me%3A%20In%20Another%20Life%2C%20Tonight'
+              + '&body=Please%20add%20me%20to%20the%20screening%20list%3A%20' + encodeURIComponent(email);
+            done();
+          });
+      });
+    }
+    wireSignup(document.getElementById('signupForm'), document.getElementById('signupNote'), document.getElementById('formDone'), '#footer');
+    wireSignup(document.getElementById('endForm'), document.getElementById('endNote'), document.getElementById('endDone'), '#trailer-end');
+
+    // trailer: the hero turns into the player; the end of the trailer asks people to stay close
+    const TRAILER_ID = 'VCweLwGWzHc';
+    const heroEl = document.querySelector('.hero');
+    const heroPlayer = document.getElementById('heroPlayer');
+    const endCard = document.getElementById('endCard');
+    let ytReady = false, ytLoading = false, wantOpen = false, yt = null, poll = null, fired = {};
+    const track = (name, extra) => { if (window.gtag) gtag('event', name, extra || {}); };
+    function loadYT() {
+      if (ytLoading) return; ytLoading = true;
+      const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s);
+    }
+    window.onYouTubeIframeAPIReady = () => { ytReady = true; if (wantOpen) startPlayer(); };
+    addEventListener('load', () => setTimeout(loadYT, 1500));
+    function startPlayer() {
+      if (yt) { yt.seekTo(0); yt.playVideo(); return; }
+      yt = new YT.Player('ytPlayer', {
+        videoId: TRAILER_ID, host: 'https://www.youtube-nocookie.com',
+        playerVars: { autoplay: 1, rel: 0, modestbranding: 1, playsinline: 1, iv_load_policy: 3, color: 'white', origin: location.origin },
+        events: { onReady: e => e.target.playVideo(), onStateChange: onYT }
+      });
+    }
+    function onYT(e) {
+      if (e.data === 1) {                       // playing
+        if (!fired.play) { fired.play = true; track('trailer_play'); }
+        clearInterval(poll);
+        poll = setInterval(() => {
+          const d = yt.getDuration(); if (!d) return;
+          const pct = yt.getCurrentTime() / d * 100;
+          [25, 50, 75].forEach(m => { if (pct >= m && !fired[m]) { fired[m] = true; track('trailer_progress', { percent: m }); } });
+        }, 500);
+      } else if (e.data === 2) { clearInterval(poll); }
+      else if (e.data === 0) {                  // ended
+        clearInterval(poll);
+        if (!fired.done) { fired.done = true; track('trailer_complete'); }
+        endCard.classList.add('show');
+      }
+    }
+    function openTrailer() {
+      fired = {};
+      heroEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      heroEl.classList.add('playing'); heroPlayer.setAttribute('aria-hidden', 'false');
+      endCard.classList.remove('show');
+      if (ytReady) startPlayer(); else { wantOpen = true; loadYT(); }
+    }
+    function closeTrailer() {
+      clearInterval(poll); wantOpen = false;
+      if (yt && yt.pauseVideo) yt.pauseVideo();
+      heroEl.classList.remove('playing'); heroPlayer.setAttribute('aria-hidden', 'true'); endCard.classList.remove('show');
+    }
+    document.getElementById('playBtn').addEventListener('click', openTrailer);
+    document.getElementById('playBtn').addEventListener('pointerenter', loadYT, { once: true });
+    document.getElementById('playerClose').addEventListener('click', closeTrailer);
+    document.getElementById('endClose').addEventListener('click', closeTrailer);
+    document.getElementById('watchAgain').addEventListener('click', () => { endCard.classList.remove('show'); fired = {}; if (yt) { yt.seekTo(0); yt.playVideo(); } });
+    addEventListener('keydown', e => { if (e.key === 'Escape' && heroEl.classList.contains('playing')) closeTrailer(); });
 
     // character cards
     document.querySelectorAll('.character-card').forEach(card => {
