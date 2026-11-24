@@ -663,7 +663,7 @@
         <div class="vid-ui" id="vidUi">
           <button type="button" class="v-btn" id="vPlay">pause</button>
           <div class="v-bar" id="vBar" role="slider" tabindex="0" aria-label="Seek"><i id="vFill"></i></div>
-          <span class="v-time" id="vTime">0:00 / 1:06</span>
+          <span class="v-time" id="vTime">0:00 / 1:04</span>
           <button type="button" class="v-btn" id="vMute">sound off</button>
           <button type="button" class="v-btn" id="vFull">full screen</button>
         </div>
@@ -997,7 +997,7 @@
     const vFill = document.getElementById('vFill'), vTime = document.getElementById('vTime'), vPlay = document.getElementById('vPlay');
     const vMute = document.getElementById('vMute'), vBar = document.getElementById('vBar');
     const loopVid = document.getElementById('heroLoop');
-    const END_CARD_AT = 61.8;               // the trailer's own "visit us" card starts a moment later; ours replaces it
+    const END_CARD_AT = 59.3;               // the trailer's own "visit us" card starts a moment later; ours replaces it
     const track = (name, extra) => { if (window.gtag) gtag('event', name, extra || {}); };
     const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
     let fired = {}, idleTimer = null;
