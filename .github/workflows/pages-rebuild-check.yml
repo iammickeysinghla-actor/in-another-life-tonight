@@ -1,0 +1,14 @@
+name: Pages rebuild check
+# Rehearsal only: asks GitHub Pages to rebuild the current site (no content changes). Proves the launch job's permission works.
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
