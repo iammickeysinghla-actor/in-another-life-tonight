@@ -154,7 +154,7 @@
       align-items: center; justify-content: flex-end;
       padding: 64px 24px 84px;
     }
-    .hero-bg, .hero-ghost {
+    .hero-bg {
       position: absolute; top: 3%; left: -22.8%; width: 125%; max-width: none; height: 100%;
       --pos: 62% 30%;
       transform-origin: 58% 30%;
@@ -167,13 +167,6 @@
       filter: brightness(1.12) saturate(1);
       animation: slowZoom 28s ease-in-out infinite alternate;
     }
-    /* the echo: a ghosted second take of the same frame, drifting slightly off register */
-    .hero-ghost {
-      filter: blur(7px) brightness(1.1) saturate(1.2);
-      opacity: 0.4; mix-blend-mode: screen;
-      animation: ghostDrift 22s ease-in-out infinite alternate;
-    }
-    @keyframes ghostDrift { from { transform: translateX(-3.2%) scale(1.03); } to { transform: translateX(3.2%) scale(1.06); } }
     @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.05); } }
 
     .hero-overlay {
@@ -250,26 +243,17 @@
       .vid-ui { flex-wrap: wrap; gap: 0 16px; padding-top: 40px; }
       .v-bar { order: -1; flex: 1 0 100%; }
       .v-time { margin-right: auto; }
-      .glow-cv { opacity: 0.4; }
     }
-    /* the poster's ghost: a blurred second copy of whatever is playing, drifting behind the picture */
-    .glow-cv, .hero-ghost-cv { image-rendering: auto; pointer-events: none; }
-    .glow-cv {
-      position: absolute; inset: -10%; width: 120%; height: 120%; z-index: 0; opacity: 0.55;
-      filter: blur(46px) saturate(1.5) brightness(1.15); mix-blend-mode: screen; animation: ghostDrift 22s ease-in-out infinite alternate;
-    }
-    .hero-loop, .hero-ghost-cv {
+    .hero-loop {
       position: absolute; top: 3%; left: 0; width: 100%; height: 100%; max-width: none; display: none;
       -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, #000 62%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 68%, transparent 93%);
               mask-image: radial-gradient(ellipse 60% 70% at 50% 50%, #000 62%, transparent 100%), linear-gradient(to bottom, transparent 0%, #000 14%, #000 68%, transparent 93%);
       -webkit-mask-composite: source-in; mask-composite: intersect;
     }
     .hero-loop { object-fit: cover; object-position: 50% 30%; opacity: 0; filter: brightness(1.06) saturate(1.04); transition: opacity 1.4s ease; animation: slowZoom 28s ease-in-out infinite alternate; }
-    .hero-ghost-cv { opacity: 0; filter: blur(16px) brightness(1.1) saturate(1.2); mix-blend-mode: screen; transition: opacity 1.4s ease; animation: ghostDrift 22s ease-in-out infinite alternate; }
-    @media (min-width: 761px) and (min-aspect-ratio: 1/1) { .hero-loop, .hero-ghost-cv { display: block; } }
+    @media (min-width: 761px) and (min-aspect-ratio: 1/1) { .hero-loop { display: block; } }
     .hero.loop-on .hero-loop { opacity: 1; }
-    .hero.loop-on .hero-ghost-cv { opacity: 0.4; }
-    .hero.loop-on .hero-bg, .hero.loop-on .hero-ghost { opacity: 0; transition: opacity 1.4s ease; }
+    .hero.loop-on .hero-bg { opacity: 0; transition: opacity 1.4s ease; }
     .player-close, .end-actions button {
       background: none; border: 0; cursor: pointer; font-family: var(--font); font-weight: 300; text-transform: lowercase;
       font-size: 0.64rem; letter-spacing: 0.34em; color: var(--c70); padding: 10px 6px; transition: color 0.3s;
@@ -285,7 +269,7 @@
     .end-card .email-form { width: 100%; }
     .end-actions { display: flex; gap: 22px; margin-top: 6px; }
     .hero.playing .hero-player { opacity: 1; visibility: visible; transition: opacity 0.9s ease; }
-    .hero.playing .hero-bg, .hero.playing .hero-ghost, .hero.playing .hero-overlay, .hero.playing .hero-loop, .hero.playing .hero-ghost-cv { opacity: 0; transition: opacity 0.9s ease; }
+    .hero.playing .hero-bg, .hero.playing .hero-overlay, .hero.playing .hero-loop { opacity: 0; transition: opacity 0.9s ease; }
     .hero.playing .hero-inner, .hero.playing .hero-by, .hero.playing .hero-foot, .hero.playing .play-ring {
       opacity: 0 !important; animation: none; pointer-events: none; transition: opacity 0.5s ease;
     }
@@ -602,7 +586,7 @@
     .reveal.visible { opacity: 1; transform: translateY(0); }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero-bg, .hero-ghost, .hero-loop, .hero-ghost-cv, .glow-cv { animation: none; }
+      .hero-bg, .hero-loop { animation: none; }
       .reveal { opacity: 1; transform: none; transition: none; }
       html { scroll-behavior: auto; }
     }
@@ -635,7 +619,7 @@
     @media (max-width: 760px), (max-aspect-ratio: 1/1) {
       .hero + .bleed { margin-top: 0; }
       /* tall screens: the photo fills the screen, zoomed in on the two faces turned toward each other, no fades */
-      .hero-ghost, .hero-overlay, .hero-loop, .hero-ghost-cv { display: none !important; }
+      .hero-overlay, .hero-loop { display: none !important; }
       .hero-bg {
         top: 0; left: 0; width: 100%; height: 100%; max-width: none;
         object-position: 62% 30%; -webkit-mask-image: none; mask-image: none; filter: none;
@@ -654,10 +638,8 @@
 
   <!-- ══ HERO ══ -->
   <section class="hero">
-    <img class="hero-ghost" src="stills/19-hero.jpg" alt="" aria-hidden="true">
     <img class="hero-bg" src="stills/19-hero.jpg" alt="">
     <video class="hero-loop" id="heroLoop" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
-    <canvas class="hero-ghost-cv" id="heroGhost" width="96" height="54" aria-hidden="true"></canvas>
     <div class="hero-overlay"></div>
 
     <p class="hero-by">a film by <b>mickey singh</b></p>
@@ -675,7 +657,6 @@
     </button>
 
     <div class="hero-player" id="heroPlayer" aria-hidden="true">
-      <canvas class="glow-cv" id="glowCv" width="96" height="54" aria-hidden="true"></canvas>
       <div class="vid-box" id="vidBox">
         <video id="trailerVid" playsinline preload="none" disablepictureinpicture controlslist="nodownload"></video>
         <div class="vid-loading" id="vidLoading">loading</div>
@@ -1019,14 +1000,8 @@
     const END_CARD_AT = 61.8;               // the trailer's own "visit us" card starts a moment later; ours replaces it
     const track = (name, extra) => { if (window.gtag) gtag('event', name, extra || {}); };
     const fmt = s => { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0'); };
-    let fired = {}, idleTimer = null, glowTimer = null, heroGhostTimer = null;
+    let fired = {}, idleTimer = null;
 
-    // the poster's ghost, drawn from the live picture at a small size and blurred by CSS
-    function startGlow() {
-      const cv = document.getElementById('glowCv'), cx = cv.getContext('2d');
-      clearInterval(glowTimer);
-      glowTimer = setInterval(() => { if (!vid.paused) try { cx.drawImage(vid, 0, 0, cv.width, cv.height); } catch (e) {} }, 120);
-    }
     function wake() {
       vidBox.classList.remove('idle'); clearTimeout(idleTimer);
       idleTimer = setTimeout(() => { if (!vid.paused) vidBox.classList.add('idle'); }, 2600);
@@ -1046,10 +1021,10 @@
       vid.muted = false; vMute.textContent = 'sound on';
       vidBox.classList.add('buffering');
       vid.play().catch(() => { vid.muted = true; vMute.textContent = 'sound off'; vid.play().catch(() => {}); });
-      startGlow(); wake();
+      wake();
     }
     function closeTrailer() {
-      vid.pause(); clearInterval(glowTimer); clearTimeout(idleTimer);
+      vid.pause(); clearTimeout(idleTimer);
       if (document.fullscreenElement) document.exitFullscreen();
       heroEl.classList.remove('playing'); heroPlayer.setAttribute('aria-hidden', 'true'); endCard.classList.remove('show');
       if (loopVid && heroEl.classList.contains('loop-on')) loopVid.play().catch(() => {});
@@ -1098,11 +1073,9 @@
         && !matchMedia('(prefers-reduced-motion: reduce)').matches
         && !(navigator.connection && navigator.connection.saveData);
       if (!ok || !loopVid) return;
-      const gcv = document.getElementById('heroGhost'), gcx = gcv.getContext('2d');
       loopVid.addEventListener('canplay', () => {
         heroEl.classList.add('loop-on');
         loopVid.play().catch(() => {});
-        heroGhostTimer = setInterval(() => { if (!loopVid.paused) try { gcx.drawImage(loopVid, 0, 0, gcv.width, gcv.height); } catch (e) {} }, 120);
       }, { once: true });
       loopVid.src = 'media/hero-loop.mp4'; loopVid.load();
       new IntersectionObserver(es => es.forEach(en => {                // rest the loop when the hero is off screen or the trailer is playing
