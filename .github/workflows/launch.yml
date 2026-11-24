@@ -1,0 +1,67 @@
+name: Launch the new site
+
+# Merges the finished site (branch: trailer-revamp) into main, which is what inanotherlifetonight.com is built from.
+# Scheduled for Tuesday Dec 1, 2026 at 7:35am Pacific (15:35 UTC, Pacific Standard Time).
+# GitHub can start scheduled jobs several minutes late, so this is set a little early.
+on:
+  schedule:
+    - cron: '35 15 1 12 *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Rehearsal: merge into a throwaway branch (launch-rehearsal) instead of main'
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pages: write
+
+jobs:
+  launch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Decide what to do
+        id: plan
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ]; then
+            if [ "$(date -u +%Y)" != "2026" ]; then echo "Not 2026; nothing to do."; echo "go=no" >> "$GITHUB_OUTPUT"; exit 0; fi
+            echo "target=main" >> "$GITHUB_OUTPUT"; echo "go=yes" >> "$GITHUB_OUTPUT"
+          elif [ "${{ inputs.dry_run }}" = "true" ]; then
+            echo "target=launch-rehearsal" >> "$GITHUB_OUTPUT"; echo "go=yes" >> "$GITHUB_OUTPUT"
+          else
+            echo "target=main" >> "$GITHUB_OUTPUT"; echo "go=yes" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Merge the new site
+        if: steps.plan.outputs.go == 'yes'
+        run: |
+          git config user.name "launch-bot"
+          git config user.email "launch-bot@users.noreply.github.com"
+          git fetch origin trailer-revamp
+          git merge --no-ff origin/trailer-revamp -m "Launch: trailer-first site"
+          test -f media/trailer-1080.mp4 && test -f media/trailer-720.mp4 && test -f media/hero-loop.mp4 && test -f media/hero-loop-m.mp4
+          grep -q "watch the official trailer" index.html
+          echo "Checks passed. Pushing to ${{ steps.plan.outputs.target }}"
+          git push --force-with-lease origin HEAD:${{ steps.plan.outputs.target }}
+
+      - name: Ask GitHub Pages to rebuild now
+        if: steps.plan.outputs.go == 'yes' && steps.plan.outputs.target == 'main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh api -X POST "repos/${{ github.repository }}/pages/builds"
+
+      - name: Wait and confirm the live site
+        if: steps.plan.outputs.go == 'yes' && steps.plan.outputs.target == 'main'
+        run: |
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            if curl -s "https://inanotherlifetonight.com/?launch=$i" | grep -q "watch the official trailer"; then echo "LIVE"; exit 0; fi
+            sleep 20
+          done
+          echo "The new site did not appear within 4 minutes"; exit 1
